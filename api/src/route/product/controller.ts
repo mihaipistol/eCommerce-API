@@ -1,7 +1,7 @@
+import { eq } from 'drizzle-orm';
 import { Request, Response } from 'express';
 import { db } from '../../db/index';
 import { productsTable } from '../../db/schema/products';
-import { eq } from 'drizzle-orm';
 
 export async function getProducts(req: Request, res: Response): Promise<void> {
   try {
@@ -45,20 +45,12 @@ export async function createProduct(
   try {
     const [result] = await db
       .insert(productsTable)
-      .values({
-        name: req.body.name,
-        description: req.body.description,
-        image: req.body.image,
-        price: req.body.price,
-      })
+      .values(req.body)
       .$returningId();
     console.log('Product created with ID:', result.id);
     res.status(201).json({
       id: result.id,
-      name: req.body.name,
-      description: req.body.description,
-      image: req.body.image,
-      price: req.body.price,
+      ...req.body,
     });
   } catch (error) {
     console.error('Error inserting product:', error);
@@ -78,12 +70,7 @@ export async function updateProduct(
     }
     const [result] = await db
       .update(productsTable)
-      .set({
-        name: req.body.name,
-        description: req.body.description,
-        image: req.body.image,
-        price: req.body.price,
-      })
+      .set(req.body)
       .where(eq(productsTable.id, productId));
     res.status(200).json(result);
   } catch (error) {
