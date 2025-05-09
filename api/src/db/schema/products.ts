@@ -1,14 +1,7 @@
-import { desc } from 'drizzle-orm';
-import {
-  double,
-  mysqlTable,
-  serial,
-  text,
-  varchar,
-} from 'drizzle-orm/mysql-core';
+import { double, int, mysqlTable, text, varchar } from 'drizzle-orm/mysql-core';
 
 export const productsTable = mysqlTable('products', {
-  id: serial().primaryKey(),
+  id: int().primaryKey().autoincrement(),
   name: varchar({ length: 255 }).notNull(),
   description: text(),
   image: varchar({ length: 255 }),

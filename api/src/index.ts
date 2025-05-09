@@ -1,6 +1,8 @@
 import express, { Request, Response } from 'express';
 
+import passwordsRouter from './route/password/router';
 import productsRouter from './route/product/router';
+import usersRouter from './route/user/router';
 
 const app = express();
 const port = 3000;
@@ -52,7 +54,9 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Hello World!');
 });
 
+app.use('/passwords', passwordsRouter);
 app.use('/products', productsRouter);
+app.use('/users', usersRouter);
 
 // Middleware to handle 404 errors
 app.use((req: Request, res: Response) => {

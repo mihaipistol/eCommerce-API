@@ -6,7 +6,7 @@ import { productsTable } from '../../db/schema/products';
 export async function getProducts(req: Request, res: Response): Promise<void> {
   try {
     const result = await db.select().from(productsTable);
-    res.json(result);
+    res.status(200).json(result);
   } catch (error) {
     console.error('Error fetching products:', error);
     res.status(500).json({ error: 'Failed to fetch products' });
@@ -18,17 +18,17 @@ export async function getProductById(
   res: Response,
 ): Promise<void> {
   try {
-    const productId = parseInt(req.params.id, 10);
-    if (isNaN(productId)) {
-      res.status(400).json({ error: 'Invalid product ID' });
+    const id = parseInt(req.params.id, 10);
+    if (isNaN(id)) {
+      res.status(400).json({ message: 'Invalid product ID' });
       return;
     }
     const [product] = await db
       .select()
       .from(productsTable)
-      .where(eq(productsTable.id, productId));
+      .where(eq(productsTable.id, id));
     if (!product) {
-      res.status(404).json({ error: 'Product not found' });
+      res.status(404).json({ message: 'Product not found' });
       return;
     }
     res.json(product);
@@ -47,7 +47,6 @@ export async function createProduct(
       .insert(productsTable)
       .values(req.body)
       .$returningId();
-    console.log('Product created with ID:', result.id);
     res.status(201).json({
       id: result.id,
       ...req.body,
@@ -63,16 +62,22 @@ export async function updateProduct(
   res: Response,
 ): Promise<void> {
   try {
-    const productId = parseInt(req.params.id, 10);
-    if (isNaN(productId)) {
-      res.status(400).json({ error: 'Invalid product ID' });
+    const id = parseInt(req.params.id, 10);
+    if (isNaN(id)) {
+      res.status(400).json({ message: 'Invalid product ID' });
       return;
     }
     const [result] = await db
       .update(productsTable)
       .set(req.body)
-      .where(eq(productsTable.id, productId));
-    res.status(200).json(result);
+      .where(eq(productsTable.id, id));
+    res
+      .status(result.affectedRows ? 200 : 404)
+      .json(
+        result.affectedRows
+          ? { id: id, ...req.body }
+          : { message: 'Product not found' },
+      );
   } catch (error) {
     console.error('Error updating product:', error);
     res.status(500).json({ error: 'Failed to update product' });
@@ -84,13 +89,17 @@ export async function deleteProduct(
   res: Response,
 ): Promise<void> {
   try {
-    const productId = parseInt(req.params.id, 10);
-    if (isNaN(productId)) {
-      res.status(400).json({ error: 'Invalid product ID' });
+    const id = parseInt(req.params.id, 10);
+    if (isNaN(id)) {
+      res.status(400).json({ message: 'Invalid product ID' });
       return;
     }
-    await db.delete(productsTable).where(eq(productsTable.id, productId));
-    res.status(204);
+    const [result] = await db
+      .delete(productsTable)
+      .where(eq(productsTable.id, id));
+    res.status(result.affectedRows ? 204 : 404).json({
+      message: result.affectedRows ? 'Product deleted' : 'Product not found',
+    });
   } catch (error) {
     console.error('Error deleting product:', error);
     res.status(500).json({ error: 'Failed to delete product' });

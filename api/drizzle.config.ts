@@ -1,7 +1,11 @@
 import { defineConfig } from 'drizzle-kit';
 export default defineConfig({
   out: './drizzle',
-  schema: './src/db/schema/products.ts',
+  schema: [
+    './src/db/schema/passwords.ts',
+    './src/db/schema/products.ts',
+    './src/db/schema/users.ts',
+  ],
   dialect: 'mysql',
   dbCredentials: {
     host: process.env.DATABASE_HOST || 'localhost',

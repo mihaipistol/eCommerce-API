@@ -1,0 +1,36 @@
+### List all products
+
+GET http://localhost:3000/products HTTP/1.1
+
+### Get a single product
+
+GET http://localhost:3000/products/1 HTTP/1.1
+
+### Create a new product
+
+POST http://localhost:3000/products HTTP/1.1
+content-type: application/json
+
+{
+    "name": "iPhone",
+    "description": "Latest model of iPhone",
+    "price": 999.99,
+    "category": "Electronics"
+}
+
+### Update an existing product
+
+PUT http://localhost:3000/products/4 HTTP/1.1
+content-type: application/json
+
+{
+    "name": "iPhone 14",
+    "description": "Latest model of iPhone with improved features",
+    "price": 1099.99,
+    "category": "Electronics"
+}
+
+### Delete a product
+
+DELETE http://localhost:3000/products/10 HTTP/1.1
+content-type: application/json
