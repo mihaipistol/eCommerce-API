@@ -2,8 +2,8 @@ import { createInsertSchema } from 'drizzle-zod';
 import { Router } from 'express';
 import { z } from 'zod';
 import { usersTable } from '../../db/schema/users';
+import { PASSWORD_MIN_LENGTH } from '../../lib/constants';
 import { validateData } from '../../middleware/validation';
-import { createSchema as passwordSchema } from '../password/router';
 import {
   createUser,
   deleteUser,
@@ -26,7 +26,7 @@ const schema = createInsertSchema(usersTable)
   });
 
 const createSchema = schema.partial().extend({
-  password: z.string().min(8),
+  password: z.string().min(PASSWORD_MIN_LENGTH),
 });
 
 const updateSchema = createSchema.partial();

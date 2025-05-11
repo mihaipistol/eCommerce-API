@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-
+import authenticationRouter from './route/authentication/router';
 import passwordsRouter from './route/password/router';
 import productsRouter from './route/product/router';
 import usersRouter from './route/user/router';
@@ -54,6 +54,7 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Hello World!');
 });
 
+app.use('/authentication', authenticationRouter);
 app.use('/passwords', passwordsRouter);
 app.use('/products', productsRouter);
 app.use('/users', usersRouter);

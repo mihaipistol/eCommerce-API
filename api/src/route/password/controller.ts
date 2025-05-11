@@ -1,11 +1,9 @@
-import { eq, desc, count } from 'drizzle-orm';
+import { count, desc, eq } from 'drizzle-orm';
 import { Request, Response } from 'express';
 import { db } from '../../db/index';
 import { passwordsTable } from '../../db/schema/passwords';
+import { PASSWORD_COUNT, SALT_LENGTH } from '../../lib/constants';
 import { makeHash, makeSalt } from '../../lib/crypto';
-
-const SALT_LENGTH = 16;
-const PASSWORD_COUNT = 8;
 
 export async function getPasswordById(
   req: Request,
