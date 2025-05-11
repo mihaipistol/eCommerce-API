@@ -1,4 +1,4 @@
-import { createInsertSchema } from 'drizzle-zod';
+import { createInsertSchema, createUpdateSchema } from 'drizzle-zod';
 import { Router } from 'express';
 import { z } from 'zod';
 import { usersTable } from '../../db/schema/users';
@@ -13,9 +13,10 @@ import {
   updateUser,
 } from './controller';
 
-const schema = createInsertSchema(usersTable)
+const createSchema = createInsertSchema(usersTable)
   .extend({
     email: z.string().email(),
+    password: z.string().min(PASSWORD_MIN_LENGTH),
   })
   .omit({
     id: true,
@@ -25,11 +26,7 @@ const schema = createInsertSchema(usersTable)
     updatedAt: true,
   });
 
-const createSchema = schema.partial().extend({
-  password: z.string().min(PASSWORD_MIN_LENGTH),
-});
-
-const updateSchema = createSchema.partial();
+const updateSchema = createUpdateSchema(usersTable);
 
 const router = Router();
 

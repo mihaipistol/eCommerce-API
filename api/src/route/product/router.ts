@@ -1,4 +1,4 @@
-import { createInsertSchema } from 'drizzle-zod';
+import { createInsertSchema, createUpdateSchema } from 'drizzle-zod';
 import { Router } from 'express';
 import { productsTable } from '../../db/schema/products';
 import { validateData } from '../../middleware/validation';
@@ -14,7 +14,7 @@ const createSchema = createInsertSchema(productsTable).omit({
   id: true,
 });
 
-const updateSchema = createSchema.partial();
+const updateSchema = createUpdateSchema(productsTable);
 
 const router = Router();
 
