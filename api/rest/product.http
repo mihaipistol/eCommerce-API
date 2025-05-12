@@ -10,6 +10,7 @@ GET http://localhost:3000/products/1 HTTP/1.1
 
 POST http://localhost:3000/products HTTP/1.1
 content-type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoxLCJyb2xlIjoidXNlciJ9LCJpYXQiOjE3NDY5ODIzMjAsImV4cCI6NDMzODk4MjMyMH0.maerY41JqvbHTHFuKrkPakCjGZcpBjBRlwZNHn4DTf0
 
 {
     "name": "iPhone",
@@ -22,6 +23,7 @@ content-type: application/json
 
 PUT http://localhost:3000/products/4 HTTP/1.1
 content-type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoxLCJyb2xlIjoidXNlciJ9LCJpYXQiOjE3NDY5ODIzMjAsImV4cCI6NDMzODk4MjMyMH0.maerY41JqvbHTHFuKrkPakCjGZcpBjBRlwZNHn4DTf0
 
 {
     "name": "iPhone 14",

@@ -1,8 +1,8 @@
 import express, { Request, Response } from 'express';
-import authenticationRouter from './route/authentication/router';
-import passwordsRouter from './route/password/router';
-import productsRouter from './route/product/router';
-import usersRouter from './route/user/router';
+import authenticationRouter from './route/authentication/router.js';
+import passwordsRouter from './route/password/router.js';
+import productsRouter from './route/product/router.js';
+import usersRouter from './route/user/router.js';
 
 const app = express();
 const port = 3000;

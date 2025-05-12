@@ -1,9 +1,13 @@
 import { createInsertSchema } from 'drizzle-zod';
 import { Router } from 'express';
-import { passwordsTable } from '../../db/schema/passwords';
-import { validateData } from '../../middleware/validation';
-import { createPassword, deletePassword, getPasswordById } from './controller';
 import { z } from 'zod';
+import { passwordsTable } from '../../db/schema/passwords.js';
+import { validateData } from '../../middleware/validation.js';
+import {
+  createPassword,
+  deletePassword,
+  getPasswordById,
+} from './controller.js';
 
 export const createSchema = createInsertSchema(passwordsTable)
   .extend({

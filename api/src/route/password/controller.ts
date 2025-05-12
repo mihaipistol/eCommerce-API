@@ -1,9 +1,9 @@
 import { count, desc, eq } from 'drizzle-orm';
 import { Request, Response } from 'express';
-import { db } from '../../db/index';
-import { passwordsTable } from '../../db/schema/passwords';
-import { PASSWORD_COUNT, SALT_LENGTH } from '../../lib/constants';
-import { makeHash, makeSalt } from '../../lib/crypto';
+import { db } from '../../db/index.js';
+import { passwordsTable } from '../../db/schema/passwords.js';
+import { PASSWORD_COUNT, SALT_LENGTH } from '../../lib/constants.js';
+import { makeHash, makeSalt } from '../../lib/crypto.js';
 
 export async function getPasswordById(
   req: Request,

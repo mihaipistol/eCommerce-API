@@ -1,10 +1,11 @@
 import { desc, eq } from 'drizzle-orm';
 import { Request, Response } from 'express';
-import { db } from '../../db/index';
-import { passwordsTable } from '../../db/schema/passwords';
-import { usersTable } from '../../db/schema/users';
-import { makeHash } from '../../lib/crypto';
-import jwt from 'jsonwebtoken';
+import { db } from '../../db/index.js';
+import { passwordsTable } from '../../db/schema/passwords.js';
+import { usersTable } from '../../db/schema/users.js';
+import { makeHash } from '../../lib/crypto.js';
+import { createToken, JWT_COOKIE_OPTIONS, verifyToken } from '../../lib/jwt.js';
+import { User } from '../../types/index.js';
 
 export async function login(req: Request, res: Response): Promise<void> {
   try {
@@ -30,15 +31,11 @@ export async function login(req: Request, res: Response): Promise<void> {
       res.status(401).json({ message: 'Authentication failed' });
       return;
     }
-    const token = jwt.sign({ email: user.email, role: user.role }, JWT_SECRET, {
-      expiresIn: JWT_EXPIRATION,
-    });
-    res.cookie('jwt', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: JWT_EXPIRATION,
-      sameSite: 'strict',
-    });
+    const token = createToken({
+      id: user.id,
+      role: user.role,
+    } as User);
+    res.cookie('jwt', token, JWT_COOKIE_OPTIONS);
     res.status(200).json({
       jwt: token,
     });
@@ -50,6 +47,8 @@ export async function login(req: Request, res: Response): Promise<void> {
 
 export async function logout(req: Request, res: Response): Promise<void> {
   try {
+    res.clearCookie('jwt', JWT_COOKIE_OPTIONS);
+    res.status(200).json({ message: 'Logged out successfully' });
   } catch (error) {
     console.error('Error at logout:', error);
     res.status(500).json({ error: 'Failed to logout' });
@@ -58,6 +57,21 @@ export async function logout(req: Request, res: Response): Promise<void> {
 
 export async function refreshToken(req: Request, res: Response): Promise<void> {
   try {
+    const token = req.cookies.jwt;
+    if (!token) {
+      res.status(401).json({ message: 'No token provided' });
+      return;
+    }
+    const payload = await verifyToken(token);
+    if (!payload) {
+      res.status(401).json({ message: 'Invalid token' });
+      return;
+    }
+    const newToken = createToken(payload);
+    res.cookie('jwt', newToken, JWT_COOKIE_OPTIONS);
+    res.status(200).json({
+      jwt: newToken,
+    });
   } catch (error) {
     console.error('Error at refreshToken:', error);
     res.status(500).json({ error: 'Failed to refresh token' });

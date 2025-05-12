@@ -34,12 +34,13 @@ content-type: application/json
 
 ### Update a user
 
-PUT http://localhost:3000/users/2 HTTP/1.1
+PUT http://localhost:3000/users/1 HTTP/1.1
 content-type: application/json
 
 {
-    "email": "mihai2@pistol.ro",
+    "email": "mihai@pistol.ro",
     "password": "123456789",
+    "role": "admin",
     "firstName": "Mihai2",
     "lastName": "Pistol",
     "phone": "+40712345678",

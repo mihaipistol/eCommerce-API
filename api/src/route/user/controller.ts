@@ -1,7 +1,7 @@
 import { eq } from 'drizzle-orm';
 import { Request, Response } from 'express';
-import { db } from '../../db/index';
-import { usersTable } from '../../db/schema/users';
+import { db } from '../../db/index.js';
+import { usersTable } from '../../db/schema/users.js';
 
 export async function getUsers(req: Request, res: Response): Promise<void> {
   try {

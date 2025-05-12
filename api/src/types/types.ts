@@ -1,1 +1,4 @@
-export type User = {};
+export type User = {
+  id: number;
+  role: string;
+};
