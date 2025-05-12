@@ -1,9 +1,9 @@
 import { createInsertSchema, createUpdateSchema } from 'drizzle-zod';
 import { Router } from 'express';
 import { z } from 'zod';
-import { usersTable } from '../../db/schema/users.js';
-import { PASSWORD_MIN_LENGTH } from '../../lib/constants.js';
-import { validateData } from '../../middleware/validation.js';
+import { usersTable } from '../../db/schema/users';
+import { PASSWORD_MIN_LENGTH } from '../../lib/constants';
+import { validateData } from '../../middleware/validation';
 import {
   createUser,
   deleteUser,
@@ -11,7 +11,7 @@ import {
   getUserById,
   getUsers,
   updateUser,
-} from './controller.js';
+} from './controller';
 
 const createSchema = createInsertSchema(usersTable)
   .extend({

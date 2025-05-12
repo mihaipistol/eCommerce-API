@@ -1,11 +1,11 @@
 import express, { Request, Response } from 'express';
-import authenticationRouter from './route/authentication/router.js';
-import passwordsRouter from './route/password/router.js';
-import productsRouter from './route/product/router.js';
-import usersRouter from './route/user/router.js';
+import authenticationRouter from './route/authentication/router';
+import passwordsRouter from './route/password/router';
+import productsRouter from './route/product/router';
+import usersRouter from './route/user/router';
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 8080;
 
 // Middleware to log requests
 app.use((req: Request, res: Response, next: () => void) => {

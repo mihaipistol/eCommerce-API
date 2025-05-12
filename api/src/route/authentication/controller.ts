@@ -1,11 +1,11 @@
 import { desc, eq } from 'drizzle-orm';
 import { Request, Response } from 'express';
-import { db } from '../../db/index.js';
-import { passwordsTable } from '../../db/schema/passwords.js';
-import { usersTable } from '../../db/schema/users.js';
-import { makeHash } from '../../lib/crypto.js';
-import { createToken, JWT_COOKIE_OPTIONS, verifyToken } from '../../lib/jwt.js';
-import { User } from '../../types/index.js';
+import { db } from '../../db/index';
+import { passwordsTable } from '../../db/schema/passwords';
+import { usersTable } from '../../db/schema/users';
+import { makeHash } from '../../lib/crypto';
+import { createToken, JWT_COOKIE_OPTIONS, verifyToken } from '../../lib/jwt';
+import { User } from '../../types/index';
 
 export async function login(req: Request, res: Response): Promise<void> {
   try {

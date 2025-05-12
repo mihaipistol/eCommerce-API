@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import Zod from 'zod';
-import { PASSWORD_MIN_LENGTH } from '../../lib/constants.js';
-import { validateData } from '../../middleware/validation.js';
-import { login, logout, refreshToken } from './controller.js';
+import { PASSWORD_MIN_LENGTH } from '../../lib/constants';
+import { validateData } from '../../middleware/validation';
+import { login, logout, refreshToken } from './controller';
 
 const schemaLogin = Zod.object({
   email: Zod.string().email(),

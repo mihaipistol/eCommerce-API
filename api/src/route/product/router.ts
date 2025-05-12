@@ -1,16 +1,16 @@
 import { createInsertSchema, createUpdateSchema } from 'drizzle-zod';
 import { Router } from 'express';
-import { productsTable } from '../../db/schema/products.js';
-import { ROLE_ADMIN } from '../../lib/constants.js';
-import { validateToken } from '../../middleware/authorization.js';
-import { validateData } from '../../middleware/validation.js';
+import { productsTable } from '../../db/schema/products';
+import { ROLE_ADMIN } from '../../lib/constants';
+import { validateToken } from '../../middleware/authorization';
+import { validateData } from '../../middleware/validation';
 import {
   createProduct,
   deleteProduct,
   getProductById,
   getProducts,
   updateProduct,
-} from './controller.js';
+} from './controller';
 
 const createSchema = createInsertSchema(productsTable).omit({
   id: true,

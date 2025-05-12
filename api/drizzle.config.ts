@@ -8,11 +8,11 @@ export default defineConfig({
   ],
   dialect: 'mysql',
   dbCredentials: {
-    host: process.env.DATABASE_HOST || 'localhost',
-    port: Number(process.env.DATABASE_PORT) || 3306,
-    user: process.env.DATABASE_USER || 'root',
-    password: process.env.DATABASE_PASSWORD || 'root',
-    database: process.env.DATABASE_NAME || 'seed-full-stack-react-native',
+    host: '34.40.17.37',
+    port: 3306,
+    user: 'root',
+    password: 'Y,cy4/5-vfsecs^^Jm~~DOqGLR%E]ahR',
+    database: 'ecommerce-demo',
     // ssl: {
     //   rejectUnauthorized: false,
     // },

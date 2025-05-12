@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import { ROLE_USER } from '../lib/constants.js';
-import { verifyToken } from '../lib/jwt.js';
-import { User } from '../types/index.js';
+import { ROLE_USER } from '../lib/constants';
+import { verifyToken } from '../lib/jwt';
+import { User } from '../types/index';
 
 export function validateToken(...allowedRoles: string[]) {
   return async function validateToken(
