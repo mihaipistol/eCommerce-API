@@ -41,5 +41,88 @@
     "ts-node-dev": "^2.0.0",
     "tsx": "^4.19.3",
     "typescript": "^5.8.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm lint",
+      "pre-push": "npm-test"
+    }
+  },
+  "eslintConfig": {
+    "globals": {
+      "NodeJS": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint",
+      "prettier"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:prettier/recommended"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "*.js",
+          "*.mjs",
+          "*.jsx",
+          "*.ts",
+          "*.tsx"
+        ],
+        "rules": {
+          "@typescript-eslint/": "off",
+          "@typescript-eslint/ban-ts-comments": "off",
+          "@typescript-eslint/ban-ts-ignore": "off",
+          "@typescript-eslint/class-name-casting": "off",
+          "@typescript-eslint/explicit-module-boundry-type": "off",
+          "@typescript-eslint/interface-name-prefix": "off",
+          "@typescript-eslint/member-delimiter-style": "off",
+          "@typescript-eslint/no-unused-vars": "warn",
+          "@typescript-eslint/no-use-before-define": "off",
+          "@typescript-eslint/no-var-requires": "off",
+          "consistent-return": "off",
+          "eslint-plugin-import/no-unresolved": "off",
+          "import/extensions": "off",
+          "import/prefer-default-export": "off",
+          "jsx-a11y/anchor-is-valid": "off",
+          "jsx-a11y/click-events-have-key-events": "off",
+          "jsx-a11y/label-has-asociated-control": "off",
+          "jsx-a11y/no-noninteractive-element-interactions": "off",
+          "jsx-a11y/no-static-element-interactions": "off",
+          "max-len": [
+            "error",
+            {
+              "code": 80,
+              "tabWidth": 2
+            }
+          ],
+          "no-extraneous-dependencies": "off",
+          "no-param-reassign": "off",
+          "no-prototype-builtins": "off",
+          "no-restricted-syntax": "off",
+          "no-undef": "off",
+          "no-underscore-dangle": "off",
+          "no-unused-vars": "off",
+          "no-use-before-definex": "off",
+          "prettier/prettier": [
+            "error",
+            {
+              "endOfLine": "auto"
+            }
+          ]
+        }
+      }
+    ],
+    "rules": {
+      "no-empty": [
+        "error",
+        {
+          "allowEmptyCatch": true
+        }
+      ]
+    }
   }
 }
