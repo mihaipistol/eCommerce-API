@@ -1,6 +1,6 @@
 ### Get all users
 
-GET https://ecommerce-demo-459604.ey.r.appspot.com/users HTTP/1.1
+GET http://localhost:3000/users HTTP/1.1
 content-type: application/json
 
 ### Get a single user
@@ -15,7 +15,7 @@ content-type: application/json
 
 ### Create a new user
 
-POST http://localhost:8080/users HTTP/1.1
+POST http://localhost:3000/users HTTP/1.1
 content-type: application/json
 
 {
@@ -34,7 +34,7 @@ content-type: application/json
 
 ### Update a user
 
-PUT http://localhost:8080/users/1 HTTP/1.1
+PUT http://localhost:3000/users/1 HTTP/1.1
 content-type: application/json
 
 {

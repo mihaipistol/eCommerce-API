@@ -5,7 +5,7 @@ import productsRouter from './route/product/router';
 import usersRouter from './route/user/router';
 
 const app = express();
-const port = process.env.PORT || 8080;
+const port = process.env.EXPRESS_PORT;
 
 // Middleware to log requests
 app.use((req: Request, res: Response, next: () => void) => {
