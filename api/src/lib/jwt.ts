@@ -1,9 +1,13 @@
+import { CookieOptions } from 'express';
 import jwt from 'jsonwebtoken';
 
 export const JWT_SECRET = process.env.JWT_SECRET as string;
-export const JWT_EXPIRATION = parseInt(process.env.JWT_EXPIRATION ?? '', 10);
+export const JWT_EXPIRATION = parseInt(
+  process.env.JWT_EXPIRATION as string,
+  10,
+);
 export const JWT_COOKIE_EXPIRATION = parseInt(
-  process.env.JWT_COOKIE_EXPIRATION ?? '',
+  process.env.JWT_COOKIE_EXPIRATION as string,
   10,
 );
 
@@ -16,8 +20,8 @@ export const JWT_COOKIE_OPTIONS = {
   httpOnly: true,
   secure: process.env.NODE_ENV === 'production',
   maxAge: JWT_COOKIE_EXPIRATION,
-  sameSite: 'strict' as const,
-};
+  sameSite: 'strict',
+} as CookieOptions;
 
 export function createToken(payload: Object): string {
   return jwt.sign({ payload }, JWT_SECRET, {

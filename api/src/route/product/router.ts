@@ -1,9 +1,9 @@
 import { createInsertSchema, createUpdateSchema } from 'drizzle-zod';
 import { Router } from 'express';
 import { productsTable } from '../../db/schema/products';
-import { ROLE_ADMIN } from '../../lib/constants';
 import { validateToken } from '../../middleware/authorization';
 import { validateData } from '../../middleware/validation';
+import { UserRole } from '../../types';
 import {
   createProduct,
   deleteProduct,
@@ -24,16 +24,16 @@ router.get('/', getProducts);
 router.get('/:id', getProductById);
 router.post(
   '/',
-  validateToken(ROLE_ADMIN),
+  validateToken(UserRole.ADMIN),
   validateData(createSchema),
   createProduct,
 );
 router.put(
   '/:id',
-  validateToken(ROLE_ADMIN),
+  validateToken(UserRole.ADMIN),
   validateData(updateSchema),
   updateProduct,
 );
-router.delete('/:id', validateToken(ROLE_ADMIN), deleteProduct);
+router.delete('/:id', validateToken(UserRole.ADMIN), deleteProduct);
 
 export default router;

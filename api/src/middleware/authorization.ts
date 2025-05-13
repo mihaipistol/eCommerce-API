@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import { ROLE_USER } from '../lib/constants';
 import { verifyToken } from '../lib/jwt';
-import { User } from '../types/index';
+import { JwtUser, UserRole } from '../types/index';
 
 export function validateToken(...allowedRoles: string[]) {
   return async function validateToken(
@@ -10,7 +9,7 @@ export function validateToken(...allowedRoles: string[]) {
     next: NextFunction,
   ) {
     if (allowedRoles.length === 0) {
-      allowedRoles.push(ROLE_USER);
+      allowedRoles.push(UserRole.GUEST, UserRole.USER);
     }
     try {
       const token = req.cookies?.jwt || req.header('Authorization');
@@ -18,7 +17,7 @@ export function validateToken(...allowedRoles: string[]) {
         res.status(401).json({ message: 'Authentication failed' });
         return;
       }
-      const decoded = (await verifyToken(token)) as User;
+      const decoded = (await verifyToken(token)) as JwtUser;
       if (decoded && allowedRoles.length > 0) {
         const userRole = decoded.role;
         if (!allowedRoles.includes(userRole)) {

@@ -5,7 +5,7 @@ import { passwordsTable } from '../../db/schema/passwords';
 import { usersTable } from '../../db/schema/users';
 import { makeHash } from '../../lib/crypto';
 import { createToken, JWT_COOKIE_OPTIONS, verifyToken } from '../../lib/jwt';
-import { User } from '../../types/index';
+import { JwtUser } from '../../types';
 
 export async function login(req: Request, res: Response): Promise<void> {
   try {
@@ -34,7 +34,7 @@ export async function login(req: Request, res: Response): Promise<void> {
     const token = createToken({
       id: user.id,
       role: user.role,
-    } as User);
+    } as JwtUser);
     res.cookie('jwt', token, JWT_COOKIE_OPTIONS);
     res.status(200).json({
       jwt: token,
