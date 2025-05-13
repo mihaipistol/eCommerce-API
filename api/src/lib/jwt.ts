@@ -1,6 +1,15 @@
 import { CookieOptions } from 'express';
 import jwt from 'jsonwebtoken';
 
+if (
+  !process.env.JWT_SECRET ||
+  !process.env.JWT_EXPIRATION ||
+  !process.env.JWT_COOKIE_EXPIRATION
+) {
+  console.error('JWT Values must be set in the environment variables');
+  throw new Error('JWT Values must be set in the environment variables');
+}
+
 export const JWT_SECRET = process.env.JWT_SECRET as string;
 export const JWT_EXPIRATION = parseInt(
   process.env.JWT_EXPIRATION as string,
@@ -10,11 +19,6 @@ export const JWT_COOKIE_EXPIRATION = parseInt(
   process.env.JWT_COOKIE_EXPIRATION as string,
   10,
 );
-
-if (!JWT_SECRET || !JWT_EXPIRATION || !JWT_COOKIE_EXPIRATION) {
-  console.error('JWT Values must be set in the environment variables');
-  throw new Error('JWT Values must be set in the environment variables');
-}
 
 export const JWT_COOKIE_OPTIONS = {
   httpOnly: true,

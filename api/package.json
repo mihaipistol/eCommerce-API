@@ -1,12 +1,12 @@
 {
   "name": "api",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "API for full stack seed",
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
-    "dev": "node --import=tsx --watch --env-file=.env src/index.ts",
-    "start": "node dist/src/index.js",
+    "dev": "node --import=tsx --watch --env-file=.env.dev src/index.ts",
+    "start": "node --env-file=.env.prod dist/src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "db:generate": "drizzle-kit generate",

@@ -12,7 +12,8 @@ coverage
 dist
 build
 app.yaml
-.env
+.env.dev
+.env.prod
 
 # misc
 .history
