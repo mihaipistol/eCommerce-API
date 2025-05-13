@@ -11,6 +11,8 @@ coverage
 # production
 dist
 build
+app.yaml
+.env
 
 # misc
 .history

@@ -1,4 +1,5 @@
 import { defineConfig } from 'drizzle-kit';
+
 export default defineConfig({
   out: './drizzle',
   schema: [
@@ -8,11 +9,11 @@ export default defineConfig({
   ],
   dialect: 'mysql',
   dbCredentials: {
-    host: '34.40.17.37',
-    port: 3306,
-    user: 'root',
-    password: 'Y,cy4/5-vfsecs^^Jm~~DOqGLR%E]ahR',
-    database: 'ecommerce-demo',
+    host: process.env.DB_HOST || 'localhost',
+    port: process.env.DB_PORT ? parseInt(process.env.DB_PORT, 10) : 3306,
+    user: process.env.DB_USERNAME || 'root',
+    password: process.env.DB_PASSWORD || 'root',
+    database: process.env.DB_DATABASE || 'ecommerce',
     // ssl: {
     //   rejectUnauthorized: false,
     // },
