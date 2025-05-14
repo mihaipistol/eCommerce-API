@@ -3,9 +3,13 @@ import { Router } from 'express';
 import { z } from 'zod';
 import { passwordsTable } from '../../db/schema/passwords';
 import { validateData } from '../../middleware/validation';
-import { createPassword, deletePassword, getPasswordById } from './controller';
+import {
+  createPassword as registerPassword,
+  deletePassword,
+  getPasswordById,
+} from './controller';
 
-export const createSchema = createInsertSchema(passwordsTable)
+export const registerSchema = createInsertSchema(passwordsTable)
   .extend({
     password: z.string().min(8),
   })
@@ -18,7 +22,7 @@ export const createSchema = createInsertSchema(passwordsTable)
 const router = Router();
 
 router.get('/:id', getPasswordById);
-router.post('/', validateData(createSchema), createPassword);
+router.post('/', validateData(registerSchema), registerPassword);
 router.delete('/:id', deletePassword);
 
 export default router;

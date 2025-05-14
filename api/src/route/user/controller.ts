@@ -56,7 +56,7 @@ export async function getUserByEmail(
   }
 }
 
-export async function createUser(req: Request, res: Response): Promise<void> {
+export async function registerUser(req: Request, res: Response): Promise<void> {
   try {
     const [existing] = await db
       .select()

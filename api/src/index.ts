@@ -1,11 +1,17 @@
 import express, { Request, Response } from 'express';
 import authenticationRouter from './route/authentication/router';
+import ordersRouter from './route/order/router';
 import passwordsRouter from './route/password/router';
 import productsRouter from './route/product/router';
 import usersRouter from './route/user/router';
 
-const app = express();
+if (!process.env.EXPRESS_PORT) {
+  console.error('PORT Value must be set in the environment variables');
+  throw new Error('PORT Value must be set in the environment variables');
+}
 const port = process.env.EXPRESS_PORT;
+
+const app = express();
 
 // Middleware to log requests
 app.use((req: Request, res: Response, next: () => void) => {
@@ -51,10 +57,11 @@ app.use((req: Request, res: Response, next: () => void) => {
 });
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('Hello World!');
+  res.send('API is online!');
 });
 
 app.use('/authentication', authenticationRouter);
+app.use('/orders', ordersRouter);
 app.use('/passwords', passwordsRouter);
 app.use('/products', productsRouter);
 app.use('/users', usersRouter);

@@ -2,7 +2,6 @@ export enum UserRole {
   ADMIN = 'admin',
   SELLER = 'seller',
   USER = 'user',
-  GUEST = 'guest',
 }
 
 export enum UserStatus {
@@ -13,7 +12,14 @@ export enum UserStatus {
   DELETED = 'deleted',
 }
 
+export enum OrderStatus {
+  NEW = 'new',
+  PENDING = 'pending',
+  DELIVERD = 'deliverd',
+}
+
 export type JwtUser = {
   id: number;
+  email: string;
   role: UserRole;
 };

@@ -37,7 +37,7 @@ export async function createPassword(
 ): Promise<void> {
   try {
     const password = {
-      id: req.body.id,
+      userId: req.body.userId,
       hash: '',
       salt: makeSalt(SALT_LENGTH),
     };

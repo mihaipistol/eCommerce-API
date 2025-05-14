@@ -1,0 +1,22 @@
+### List all orders
+
+GET http://localhost:3000/orders HTTP/1.1
+
+### Get a single order
+
+GET http://localhost:3000/orders/1 HTTP/1.1
+
+### Create a new order
+
+POST http://localhost:3000/orders HTTP/1.1
+content-type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoxLCJyb2xlIjoiYWRtaW4ifSwiaWF0IjoxNzQ3MjI3ODE1LCJleHAiOjQzMzkyMjc4MTV9.S996US75jGCdaHNppgKmrHbzk-5CxM-zCqcf7OYxCJY
+
+{
+    "items": []
+}
+
+### Delete an order
+
+DELETE http://localhost:3000/orders/1 HTTP/1.1
+content-type: application/json

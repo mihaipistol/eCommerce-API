@@ -5,7 +5,7 @@ import { usersTable } from '../../db/schema/users';
 import { PASSWORD_MIN_LENGTH } from '../../lib/constants';
 import { validateData } from '../../middleware/validation';
 import {
-  createUser,
+  registerUser,
   deleteUser,
   getUserByEmail,
   getUserById,
@@ -13,7 +13,7 @@ import {
   updateUser,
 } from './controller';
 
-const createSchema = createInsertSchema(usersTable)
+const registerSchema = createInsertSchema(usersTable)
   .extend({
     email: z.string().email(),
     password: z.string().min(PASSWORD_MIN_LENGTH),
@@ -33,7 +33,7 @@ const router = Router();
 router.get('/', getUsers);
 router.get('/id/:id', getUserById);
 router.get('/email/:email', getUserByEmail);
-router.post('/', validateData(createSchema), createUser);
+router.post('/', validateData(registerSchema), registerUser);
 router.put('/:id', validateData(updateSchema), updateUser);
 router.delete('/:id', deleteUser);
 

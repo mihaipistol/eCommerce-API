@@ -6,7 +6,6 @@ if (
   !process.env.JWT_EXPIRATION ||
   !process.env.JWT_COOKIE_EXPIRATION
 ) {
-  console.error('JWT Values must be set in the environment variables');
   throw new Error('JWT Values must be set in the environment variables');
 }
 

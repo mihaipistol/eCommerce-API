@@ -2,6 +2,29 @@ import { NextFunction, Request, Response } from 'express';
 import { verifyToken } from '../lib/jwt';
 import { JwtUser, UserRole } from '../types/index';
 
+function verifyRole(given: UserRole, expected: UserRole) {
+  switch (given) {
+    case UserRole.USER:
+      if (expected === UserRole.USER) {
+        return true;
+      }
+    case UserRole.SELLER:
+      if (expected === UserRole.SELLER || expected === UserRole.USER) {
+        return true;
+      }
+    case UserRole.ADMIN:
+      if (
+        expected === UserRole.ADMIN ||
+        expected === UserRole.SELLER ||
+        expected === UserRole.USER
+      ) {
+        return true;
+      }
+    default:
+      return false;
+  }
+}
+
 export function validateToken(...allowedRoles: string[]) {
   return async function validateToken(
     req: Request,
@@ -9,7 +32,7 @@ export function validateToken(...allowedRoles: string[]) {
     next: NextFunction,
   ) {
     if (allowedRoles.length === 0) {
-      allowedRoles.push(UserRole.GUEST, UserRole.USER);
+      allowedRoles.push(UserRole.USER);
     }
     try {
       const token = req.cookies?.jwt || req.header('Authorization');
@@ -17,18 +40,23 @@ export function validateToken(...allowedRoles: string[]) {
         res.status(401).json({ message: 'Authentication failed' });
         return;
       }
-      const decoded = (await verifyToken(token)) as JwtUser;
-      if (decoded && allowedRoles.length > 0) {
-        const userRole = decoded.role;
-        if (!allowedRoles.includes(userRole)) {
+      const user = (await verifyToken(token)) as JwtUser;
+      if (user && allowedRoles.length > 0) {
+        const isAllowed = allowedRoles
+          .map((role) => {
+            return verifyRole(user.role, role as UserRole);
+          })
+          .find((response) => response === true);
+        if (!isAllowed) {
           res.status(403).json({ message: 'Access denied' });
           return;
         }
       }
-      if (!decoded) {
+      if (!user) {
         res.status(401).json({ message: 'Authentication failed' });
         return;
       }
+      req.user = user as JwtUser;
       next();
     } catch (error) {
       console.error('Error validating token:', error);

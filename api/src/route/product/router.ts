@@ -5,14 +5,14 @@ import { validateToken } from '../../middleware/authorization';
 import { validateData } from '../../middleware/validation';
 import { UserRole } from '../../types';
 import {
-  createProduct,
+  createProduct as registerProduct,
   deleteProduct,
   getProductById,
   getProducts,
   updateProduct,
 } from './controller';
 
-const createSchema = createInsertSchema(productsTable).omit({
+const registerSchema = createInsertSchema(productsTable).omit({
   id: true,
 });
 
@@ -25,8 +25,8 @@ router.get('/:id', getProductById);
 router.post(
   '/',
   validateToken(UserRole.ADMIN),
-  validateData(createSchema),
-  createProduct,
+  validateData(registerSchema),
+  registerProduct,
 );
 router.put(
   '/:id',

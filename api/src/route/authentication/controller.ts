@@ -20,7 +20,7 @@ export async function login(req: Request, res: Response): Promise<void> {
     const [password] = await db
       .select()
       .from(passwordsTable)
-      .where(eq(passwordsTable.id, user.id))
+      .where(eq(passwordsTable.userId, user.id))
       .orderBy(desc(passwordsTable.createdAt));
     if (!password) {
       res.status(404).json({ massage: 'Password not found' });
@@ -33,6 +33,7 @@ export async function login(req: Request, res: Response): Promise<void> {
     }
     const token = createToken({
       id: user.id,
+      email: user.email,
       role: user.role,
     } as JwtUser);
     res.cookie('jwt', token, JWT_COOKIE_OPTIONS);
