@@ -31,7 +31,7 @@ export async function getPasswordById(
   }
 }
 
-export async function createPassword(
+export async function registerPassword(
   req: Request,
   res: Response,
 ): Promise<void> {
@@ -47,9 +47,7 @@ export async function createPassword(
       .values(password)
       .$returningId();
     await db.delete;
-    res.status(201).json({
-      id: result,
-    });
+    res.status(201).json(result);
   } catch (error) {
     console.error('Error inserting password:', error);
     res.status(500).json({ error: 'Failed to create password' });

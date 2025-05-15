@@ -31,14 +31,14 @@ export async function login(req: Request, res: Response): Promise<void> {
       res.status(401).json({ message: 'Authentication failed' });
       return;
     }
-    const token = createToken({
+    const jwt = createToken({
       id: user.id,
       email: user.email,
       role: user.role,
     } as JwtUser);
-    res.cookie('jwt', token, JWT_COOKIE_OPTIONS);
+    res.cookie('jwt', jwt, JWT_COOKIE_OPTIONS);
     res.status(200).json({
-      jwt: token,
+      jwt: jwt,
     });
   } catch (error) {
     console.error('Error at login:', error);

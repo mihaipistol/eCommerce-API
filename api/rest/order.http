@@ -4,7 +4,8 @@ GET http://localhost:3000/orders HTTP/1.1
 
 ### Get a single order
 
-GET http://localhost:3000/orders/1 HTTP/1.1
+GET http://localhost:3000/orders/10 HTTP/1.1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoxLCJyb2xlIjoiYWRtaW4ifSwiaWF0IjoxNzQ3MjI3ODE1LCJleHAiOjQzMzkyMjc4MTV9.S996US75jGCdaHNppgKmrHbzk-5CxM-zCqcf7OYxCJY
 
 ### Create a new order
 
@@ -13,7 +14,12 @@ content-type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoxLCJyb2xlIjoiYWRtaW4ifSwiaWF0IjoxNzQ3MjI3ODE1LCJleHAiOjQzMzkyMjc4MTV9.S996US75jGCdaHNppgKmrHbzk-5CxM-zCqcf7OYxCJY
 
 {
-    "items": []
+    "items": [
+        {
+            "productId": 1,
+            "quantity": 2
+        }
+    ]
 }
 
 ### Delete an order

@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { passwordsTable } from '../../db/schema/passwords';
 import { validateData } from '../../middleware/validation';
 import {
-  createPassword as registerPassword,
+  registerPassword as registerPassword,
   deletePassword,
   getPasswordById,
 } from './controller';

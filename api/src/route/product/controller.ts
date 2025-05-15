@@ -38,7 +38,7 @@ export async function getProductById(
   }
 }
 
-export async function createProduct(
+export async function registerProduct(
   req: Request,
   res: Response,
 ): Promise<void> {

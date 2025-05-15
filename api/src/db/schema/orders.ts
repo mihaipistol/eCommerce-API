@@ -14,7 +14,7 @@ export const ordersTable = mysqlTable('orders', {
   userId: int().references(() => usersTable.id),
   status: varchar({ length: 50 }).notNull().default(OrderStatus.NEW),
   createdAt: timestamp().notNull().defaultNow(),
-  updatedAt: timestamp().notNull().defaultNow(),
+  updatedAt: timestamp(),
 });
 
 export const ordersItemsTable = mysqlTable('orders_items', {

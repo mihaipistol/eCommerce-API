@@ -5,7 +5,7 @@ import { validateToken } from '../../middleware/authorization';
 import { validateData } from '../../middleware/validation';
 import { UserRole } from '../../types';
 import {
-  createProduct as registerProduct,
+  registerProduct as registerProduct,
   deleteProduct,
   getProductById,
   getProducts,
