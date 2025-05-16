@@ -22,8 +22,7 @@ JWT_REFRESH_EXPIRATION='2592000000' # 30 days in milliseconds
 JWT_COOKIE_EXPIRATION='2592000000' # 30 days in milliseconds
 </code>
 
-
-app.yaml
+<b>app.yaml</b>
 <code>
 runtime: nodejs22
 env: standard
