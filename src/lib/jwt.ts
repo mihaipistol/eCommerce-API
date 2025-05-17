@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { CookieOptions } from 'express';
 import jwt from 'jsonwebtoken';
 

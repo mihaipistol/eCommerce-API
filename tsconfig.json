@@ -1,18 +1,21 @@
 {
   "compilerOptions": {
     "module": "commonjs", // Specify module code generation
-    "esModuleInterop": true, // Enables emit interoperability between CommonJS and ES Modules
-    "allowSyntheticDefaultImports": true, // Allows default imports from modules with no default export
-    "outDir": "./dist", // Redirect output structure to the directory
-    "strict": true, // Enable all strict type-checking options
-    "skipLibCheck": true, // Skip type checking of declaration files
-    "resolveJsonModule": true, // Include modules imported with .json extension
-    "forceConsistentCasingInFileNames": true, // Disallow inconsistently-cased references to the same file
-    "noEmit": false, // Do not emit output
-    "isolatedModules": true, // Ensure that each file can be safely transpiled independently
+    "target": "es6", // Specify ECMAScript target version
     "baseUrl": ".", // Base directory to resolve non-relative module names
+    "outDir": "./dist", // Redirect output structure to the directory
+    "allowSyntheticDefaultImports": true, // Allows default imports from modules with no default export
+    "esModuleInterop": true, // Enables emit interoperability between CommonJS and ES Modules
+    "forceConsistentCasingInFileNames": true, // Disallow inconsistently-cased references to the same file
+    "isolatedModules": true, // Ensure that each file can be safely transpiled independently
+    "noEmit": false, // Do not emit output
+    "noImplicitAny": true,
+    "resolveJsonModule": true, // Include modules imported with .json extension
+    "skipLibCheck": true, // Skip type checking of declaration files
+    "strict": true, // Enable all strict type-checking options
+    "typeRoots": [ "./src/@types", "./node_modules/@types" ], // List of folders to include type definitions from
     "paths": {
-      "*": [ "node_modules/*" ],
+      "*": [ "node_modules/*" ], // List of paths to be used for module resolution
     } // List of paths to be used for module resolution
-  },
+  }
 }
