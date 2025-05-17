@@ -1,6 +1,3 @@
-# Admin
-## Deployment
-
 # API
 ## Deployment
 To deploy on AppEngine add the following congi files and execute the deployment command <code>gloud app deploy</code>
@@ -29,6 +26,3 @@ env: standard
 service: api
 instance_class: F1
 </code>
-
-# Client
-## Deployment
