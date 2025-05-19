@@ -1,6 +1,6 @@
 import { eq } from 'drizzle-orm';
 import { Request, Response } from 'express';
-import { db } from '../../db/index';
+import { db } from '../../db';
 import { ordersItemsTable, ordersTable } from '../../db/schema/orders';
 import { productsTable } from '../../db/schema/products';
 
@@ -109,10 +109,10 @@ export async function registerOrder(
         item.price = product.price;
       }
     }
-    const items = await db
-      .insert(ordersItemsTable)
-      .values(req.body.items)
-      .$returningId();
+    // const items = await db
+    //   .insert(ordersItemsTable)
+    //   .values(req.body.items)
+    //   .$returningId();
     res.status(201).json(order);
   } catch (error) {
     console.error('Error inserting order:', error);

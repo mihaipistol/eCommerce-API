@@ -1,6 +1,6 @@
 import { count, desc, eq } from 'drizzle-orm';
 import { Request, Response } from 'express';
-import { db } from '../../db/index';
+import { db } from '../../db';
 import { passwordsTable } from '../../db/schema/passwords';
 import { PASSWORD_COUNT, SALT_LENGTH } from '../../lib/constants';
 import { makeHash, makeSalt } from '../../lib/crypto';

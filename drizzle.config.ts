@@ -14,9 +14,11 @@ if (
 export default defineConfig({
   out: './drizzle',
   schema: [
+    './src/db/schema/adress.ts',
     './src/db/schema/orders.ts',
     './src/db/schema/passwords.ts',
     './src/db/schema/products.ts',
+    './src/db/schema/refreshTokens.ts',
     './src/db/schema/users.ts',
   ],
   dialect: 'mysql',

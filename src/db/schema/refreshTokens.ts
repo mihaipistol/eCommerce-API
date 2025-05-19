@@ -1,5 +1,7 @@
+import { relations } from 'drizzle-orm';
 import {
   bigint,
+  int,
   mysqlTable,
   serial,
   timestamp,
@@ -7,12 +9,12 @@ import {
 } from 'drizzle-orm/mysql-core';
 import { usersTable } from './users';
 
-export const passwordsTable = mysqlTable('passwords', {
+export const refreshTokensTable = mysqlTable('refresh_tokens', {
   id: serial().primaryKey(),
   userId: bigint({ mode: 'number', unsigned: true })
     .notNull()
     .references(() => usersTable.id),
-  hash: varchar({ length: 255 }).notNull(),
-  salt: varchar({ length: 16 }).notNull(),
+  token: varchar({ length: 255 }).notNull(),
   createdAt: timestamp().notNull().defaultNow(),
+  expiresAt: timestamp().notNull(),
 });

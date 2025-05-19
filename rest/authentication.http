@@ -8,22 +8,12 @@ content-type: application/json
     "password": "123456789"
 }
 
-### Register
-
-POST http://localhost:3000/authentication/register HTTP/1.1
-content-type: application/json
-
-{
-    "id": 1,
-    "password": "123456789"
-}
-
 ### Logout
 
 POST http://localhost:3000/authentication/logout HTTP/1.1
-content-type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJtaWhhaUBwaXN0b2wucm8iLCJyb2xlIjoiYWRtaW4iLCJzdWIiOiJhcGkiLCJpYXQiOjE3NDc2NTcxNTIsImV4cCI6MTc1MTI1NzE1Mn0.r2mY4-MWPNFsWcxdtGCk4DkbuErVgtDM3UzExVGonno
 
-{
-    "id": 1,
-    "password": "123456789"
-}
+### Refresh Token
+
+POST http://localhost:3000/authentication/refresh-token HTTP/1.1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwic3ViIjoicmVmcmVzaCIsImlhdCI6MTc0NzY1MTA1NSwiZXhwIjoxNzUxMjUxMDU1fQ.NnC8BGSpNQ1S22Wlb8DXcGnlUtuorOdxecmMKoykSzs

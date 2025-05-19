@@ -23,12 +23,6 @@ content-type: application/json
     "password": "123456789",
     "firstName": "Mihai",
     "lastName": "Pistol",
-    "phone": "+40712345678",
-    "address": "Portului 45",
-    "city": "Mangalia",
-    "state": "Constanta",
-    "country": "Romania",
-    "zip": "905500",
     "image": "blob:https://example.com/image.png"
 }
 
@@ -43,12 +37,6 @@ content-type: application/json
     "role": "admin",
     "firstName": "Mihai",
     "lastName": "Pistol",
-    "phone": "+40712345678",
-    "address": "Portului 45",
-    "city": "Mangalia",
-    "state": "Constanta",
-    "country": "Romania",
-    "zip": "905500",
     "image": "blob:https://example.com/image.png"
 }
 

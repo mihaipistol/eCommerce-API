@@ -1,6 +1,14 @@
-import 'dotenv/config';
 import { drizzle } from 'drizzle-orm/mysql2';
 import mysql from 'mysql2/promise';
+import { addressesTable } from './schema/adress';
+import { ordersTable } from './schema/orders';
+import { passwordsTable } from './schema/passwords';
+import { passwordsRelation } from './schema/passwordsRelations';
+import { productsTable } from './schema/products';
+import { refreshTokensTable } from './schema/refreshTokens';
+import { refreshTokensRelations } from './schema/refreshTokensRelations';
+import { usersTable } from './schema/users';
+import { usersRelation } from './schema/usersRelations';
 
 if (
   !process.env.DB_HOST ||
@@ -12,7 +20,7 @@ if (
   throw new Error('DB Values must be set in the environment variables');
 }
 
-const poolConnection = mysql.createPool({
+const connection = mysql.createPool({
   host: process.env.DB_HOST,
   port: parseInt(process.env.DB_PORT, 10),
   user: process.env.DB_USERNAME,
@@ -21,4 +29,17 @@ const poolConnection = mysql.createPool({
   waitForConnections: true,
 });
 
-export const db = drizzle({ client: poolConnection });
+export const db = drizzle(connection, {
+  schema: {
+    addresses: addressesTable,
+    orders: ordersTable,
+    passwords: passwordsTable,
+    products: productsTable,
+    refreshToken: refreshTokensTable,
+    users: usersTable,
+    usersRelation,
+    passwordsRelation,
+    refreshTokensRelations,
+  },
+  mode: 'default',
+});

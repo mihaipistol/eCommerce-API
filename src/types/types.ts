@@ -1,3 +1,8 @@
+export enum JwtSub {
+  API = 'api',
+  REFRESH = 'refresh',
+}
+
 export enum UserRole {
   ADMIN = 'admin',
   SELLER = 'seller',
