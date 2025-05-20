@@ -3,6 +3,7 @@ import {
   double,
   int,
   mysqlTable,
+  primaryKey,
   serial,
   timestamp,
   varchar,
@@ -21,14 +22,17 @@ export const ordersTable = mysqlTable('orders', {
   updatedAt: timestamp(),
 });
 
-export const ordersItemsTable = mysqlTable('orders_items', {
-  id: serial().primaryKey(),
-  orderId: bigint({ mode: 'number', unsigned: true })
-    .notNull()
-    .references(() => ordersTable.id),
-  productId: bigint({ mode: 'number', unsigned: true })
-    .notNull()
-    .references(() => productsTable.id),
-  price: double().notNull(),
-  quantity: int().notNull(),
-});
+export const ordersProductsTable = mysqlTable(
+  'orders_products',
+  {
+    orderId: bigint({ mode: 'number', unsigned: true })
+      .notNull()
+      .references(() => ordersTable.id),
+    productId: bigint({ mode: 'number', unsigned: true })
+      .notNull()
+      .references(() => productsTable.id),
+    price: double().notNull(),
+    quantity: int().notNull(),
+  },
+  (t) => [primaryKey({ columns: [t.orderId, t.productId] })],
+);

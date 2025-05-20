@@ -1,7 +1,7 @@
 import { eq } from 'drizzle-orm';
 import { Request, Response } from 'express';
 import { db } from '../../db';
-import { ordersItemsTable, ordersTable } from '../../db/schema/orders';
+import { ordersProductsTable, ordersTable } from '../../db/schema/orders';
 import { productsTable } from '../../db/schema/products';
 
 export async function getOrders(req: Request, res: Response): Promise<void> {
@@ -14,7 +14,10 @@ export async function getOrders(req: Request, res: Response): Promise<void> {
       .select()
       .from(ordersTable)
       .where(eq(ordersTable.userId, req.user?.id))
-      .leftJoin(ordersItemsTable, eq(ordersItemsTable.orderId, ordersTable.id));
+      .leftJoin(
+        ordersProductsTable,
+        eq(ordersProductsTable.orderId, ordersTable.id),
+      );
     if (!orders) {
       res.status(404).json({ message: 'Orders not found' });
       return;
@@ -38,7 +41,10 @@ export async function getOrdersByUserId(
       .select()
       .from(ordersTable)
       .where(eq(ordersTable.userId, req.user?.id))
-      .leftJoin(ordersItemsTable, eq(ordersItemsTable.orderId, ordersTable.id));
+      .leftJoin(
+        ordersProductsTable,
+        eq(ordersProductsTable.orderId, ordersTable.id),
+      );
     if (!orders) {
       res.status(404).json({ message: 'Orders not found' });
       return;
@@ -61,12 +67,15 @@ export async function getOrderById(req: Request, res: Response): Promise<void> {
       .select()
       .from(ordersTable)
       .where(eq(ordersTable.id, id))
-      .leftJoin(ordersItemsTable, eq(ordersItemsTable.orderId, ordersTable.id));
+      .leftJoin(
+        ordersProductsTable,
+        eq(ordersProductsTable.orderId, ordersTable.id),
+      );
     if (!order) {
       res.status(404).json({ message: 'Order not found' });
       return;
     }
-    res.json({ ...order.orders, items: order.orders_items });
+    // res.json({ ...order.orders, items: order.orders_items });
   } catch (error) {
     console.error('Error fetching order by ID:', error);
     res.status(500).json({ error: 'Failed to fetch order' });

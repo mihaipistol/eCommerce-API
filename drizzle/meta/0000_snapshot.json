@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "a308d718-93dd-4f54-ab8d-247003535dbb",
+  "id": "27484fe2-bd2c-476c-8655-135f036519df",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "addresses": {
@@ -107,16 +107,9 @@
       "uniqueConstraints": {},
       "checkConstraint": {}
     },
-    "orders_items": {
-      "name": "orders_items",
+    "orders_products": {
+      "name": "orders_products",
       "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": true
-        },
         "orderId": {
           "name": "orderId",
           "type": "bigint unsigned",
@@ -148,9 +141,9 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "orders_items_orderId_orders_id_fk": {
-          "name": "orders_items_orderId_orders_id_fk",
-          "tableFrom": "orders_items",
+        "orders_products_orderId_orders_id_fk": {
+          "name": "orders_products_orderId_orders_id_fk",
+          "tableFrom": "orders_products",
           "tableTo": "orders",
           "columnsFrom": [
             "orderId"
@@ -161,9 +154,9 @@
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "orders_items_productId_products_id_fk": {
-          "name": "orders_items_productId_products_id_fk",
-          "tableFrom": "orders_items",
+        "orders_products_productId_products_id_fk": {
+          "name": "orders_products_productId_products_id_fk",
+          "tableFrom": "orders_products",
           "tableTo": "products",
           "columnsFrom": [
             "productId"
@@ -176,10 +169,11 @@
         }
       },
       "compositePrimaryKeys": {
-        "orders_items_id": {
-          "name": "orders_items_id",
+        "orders_products_orderId_productId_pk": {
+          "name": "orders_products_orderId_productId_pk",
           "columns": [
-            "id"
+            "orderId",
+            "productId"
           ]
         }
       },

@@ -12,13 +12,12 @@ CREATE TABLE `addresses` (
 	CONSTRAINT `addresses_id` PRIMARY KEY(`id`)
 );
 --> statement-breakpoint
-CREATE TABLE `orders_items` (
-	`id` serial AUTO_INCREMENT NOT NULL,
+CREATE TABLE `orders_products` (
 	`orderId` bigint unsigned NOT NULL,
 	`productId` bigint unsigned NOT NULL,
 	`price` double NOT NULL,
 	`quantity` int NOT NULL,
-	CONSTRAINT `orders_items_id` PRIMARY KEY(`id`)
+	CONSTRAINT `orders_products_orderId_productId_pk` PRIMARY KEY(`orderId`,`productId`)
 );
 --> statement-breakpoint
 CREATE TABLE `orders` (
@@ -74,8 +73,8 @@ CREATE TABLE `users` (
 );
 --> statement-breakpoint
 ALTER TABLE `addresses` ADD CONSTRAINT `addresses_userId_users_id_fk` FOREIGN KEY (`userId`) REFERENCES `users`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `orders_items` ADD CONSTRAINT `orders_items_orderId_orders_id_fk` FOREIGN KEY (`orderId`) REFERENCES `orders`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE `orders_items` ADD CONSTRAINT `orders_items_productId_products_id_fk` FOREIGN KEY (`productId`) REFERENCES `products`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE `orders_products` ADD CONSTRAINT `orders_products_orderId_orders_id_fk` FOREIGN KEY (`orderId`) REFERENCES `orders`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE `orders_products` ADD CONSTRAINT `orders_products_productId_products_id_fk` FOREIGN KEY (`productId`) REFERENCES `products`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE `orders` ADD CONSTRAINT `orders_userId_users_id_fk` FOREIGN KEY (`userId`) REFERENCES `users`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE `passwords` ADD CONSTRAINT `passwords_userId_users_id_fk` FOREIGN KEY (`userId`) REFERENCES `users`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE `refresh_tokens` ADD CONSTRAINT `refresh_tokens_userId_users_id_fk` FOREIGN KEY (`userId`) REFERENCES `users`(`id`) ON DELETE no action ON UPDATE no action;

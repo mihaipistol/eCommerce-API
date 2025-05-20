@@ -1,6 +1,6 @@
 import { createInsertSchema } from 'drizzle-zod';
 import { Router } from 'express';
-import { ordersItemsTable, ordersTable } from '../../db/schema/orders';
+import { ordersProductsTable, ordersTable } from '../../db/schema/orders';
 import { validateData } from '../../middleware/validation';
 import {
   getOrderById as getOrdersById,
@@ -12,9 +12,8 @@ import { validateToken } from '../../middleware/authorization';
 
 export const registerSchema = createInsertSchema(ordersTable)
   .extend({
-    items: createInsertSchema(ordersItemsTable)
+    items: createInsertSchema(ordersProductsTable)
       .omit({
-        id: true,
         orderId: true,
         price: true,
       })

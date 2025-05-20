@@ -3,12 +3,14 @@ import mysql from 'mysql2/promise';
 import { addressesTable } from './schema/adress';
 import { ordersTable } from './schema/orders';
 import { passwordsTable } from './schema/passwords';
-import { passwordsRelation } from './schema/passwordsRelations';
+import { passwordsRelations } from './schema/passwordsRelations';
 import { productsTable } from './schema/products';
 import { refreshTokensTable } from './schema/refreshTokens';
 import { refreshTokensRelations } from './schema/refreshTokensRelations';
 import { usersTable } from './schema/users';
-import { usersRelation } from './schema/usersRelations';
+import { usersRelations } from './schema/usersRelations';
+import { ordersRelations } from './schema/ordersRelations';
+import { productsRelations } from './schema/productsCategories';
 
 if (
   !process.env.DB_HOST ||
@@ -37,9 +39,11 @@ export const db = drizzle(connection, {
     products: productsTable,
     refreshToken: refreshTokensTable,
     users: usersTable,
-    usersRelation,
-    passwordsRelation,
+    ordersRelations,
+    passwordsRelations,
+    productsRelations,
     refreshTokensRelations,
+    usersRelations,
   },
   mode: 'default',
 });
