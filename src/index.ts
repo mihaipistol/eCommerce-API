@@ -1,9 +1,9 @@
 import express, { Request, Response } from 'express';
 import authenticationRouter from './route/authentication/router';
-import ordersRouter from './route/order/router';
-import passwordsRouter from './route/password/router';
-import productsRouter from './route/product/router';
-import usersRouter from './route/user/router';
+import ordersRouter from './route/orders/router';
+import passwordsRouter from './route/passwords/router';
+import productsRouter from './route/products/router';
+import usersRouter from './route/users/router';
 
 if (!process.env.EXPRESS_PORT) {
   console.error('PORT Value must be set in the environment variables');

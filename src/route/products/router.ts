@@ -7,30 +7,32 @@ import { UserRole } from '../../types';
 import {
   registerProduct as registerProduct,
   deleteProduct,
-  getProductById,
-  getProducts,
+  selectProductById,
+  selectProducts,
   updateProduct,
 } from './controller';
 
-const registerSchema = createInsertSchema(productsTable).omit({
-  id: true,
-});
+const registerSchema = createInsertSchema(productsTable)
+  .omit({
+    id: true,
+  })
+  .array();
 
 const updateSchema = createUpdateSchema(productsTable);
 
 const router = Router();
 
-router.get('/', getProducts);
-router.get('/:id', getProductById);
+router.get('/', selectProducts);
+router.get('/:id', selectProductById);
 router.post(
   '/',
-  validateToken(UserRole.ADMIN),
+  validateToken(UserRole.SELLER),
   validateData(registerSchema),
   registerProduct,
 );
 router.put(
   '/:id',
-  validateToken(UserRole.ADMIN),
+  validateToken(UserRole.SELLER),
   validateData(updateSchema),
   updateProduct,
 );

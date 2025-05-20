@@ -1,16 +1,16 @@
 import { drizzle } from 'drizzle-orm/mysql2';
 import mysql from 'mysql2/promise';
-import { addressesTable } from './schema/adress';
+import { addressesTable } from './schema/addresses';
 import { ordersTable } from './schema/orders';
+import { ordersRelations } from './schema/ordersRelations';
 import { passwordsTable } from './schema/passwords';
 import { passwordsRelations } from './schema/passwordsRelations';
 import { productsTable } from './schema/products';
+import { productsRelations } from './schema/productsRelations';
 import { refreshTokensTable } from './schema/refreshTokens';
 import { refreshTokensRelations } from './schema/refreshTokensRelations';
 import { usersTable } from './schema/users';
 import { usersRelations } from './schema/usersRelations';
-import { ordersRelations } from './schema/ordersRelations';
-import { productsRelations } from './schema/productsCategories';
 
 if (
   !process.env.DB_HOST ||

@@ -3,7 +3,10 @@ import { Request, Response } from 'express';
 import { db } from '../../db';
 import { productsTable } from '../../db/schema/products';
 
-export async function getProducts(req: Request, res: Response): Promise<void> {
+export async function selectProducts(
+  req: Request,
+  res: Response,
+): Promise<void> {
   try {
     const result = await db.select().from(productsTable);
     res.status(200).json(result);
@@ -13,7 +16,7 @@ export async function getProducts(req: Request, res: Response): Promise<void> {
   }
 }
 
-export async function getProductById(
+export async function selectProductById(
   req: Request,
   res: Response,
 ): Promise<void> {

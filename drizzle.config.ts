@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import { defineConfig } from 'drizzle-kit';
 
 if (
@@ -14,7 +13,7 @@ if (
 export default defineConfig({
   out: './drizzle',
   schema: [
-    './src/db/schema/adress.ts',
+    './src/db/schema/adresses.ts',
     './src/db/schema/orders.ts',
     './src/db/schema/passwords.ts',
     './src/db/schema/products.ts',

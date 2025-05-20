@@ -1,17 +1,3 @@
-CREATE TABLE `addresses` (
-	`id` serial AUTO_INCREMENT NOT NULL,
-	`userId` bigint unsigned NOT NULL,
-	`phone` varchar(255),
-	`address` varchar(255),
-	`city` varchar(255),
-	`state` varchar(255),
-	`country` varchar(255),
-	`zip` varchar(255),
-	`createdAt` timestamp NOT NULL DEFAULT (now()),
-	`updatedAt` timestamp NOT NULL DEFAULT (now()),
-	CONSTRAINT `addresses_id` PRIMARY KEY(`id`)
-);
---> statement-breakpoint
 CREATE TABLE `orders_products` (
 	`orderId` bigint unsigned NOT NULL,
 	`productId` bigint unsigned NOT NULL,
@@ -72,7 +58,6 @@ CREATE TABLE `users` (
 	CONSTRAINT `users_email_unique` UNIQUE(`email`)
 );
 --> statement-breakpoint
-ALTER TABLE `addresses` ADD CONSTRAINT `addresses_userId_users_id_fk` FOREIGN KEY (`userId`) REFERENCES `users`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE `orders_products` ADD CONSTRAINT `orders_products_orderId_orders_id_fk` FOREIGN KEY (`orderId`) REFERENCES `orders`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE `orders_products` ADD CONSTRAINT `orders_products_productId_products_id_fk` FOREIGN KEY (`productId`) REFERENCES `products`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE `orders` ADD CONSTRAINT `orders_userId_users_id_fk` FOREIGN KEY (`userId`) REFERENCES `users`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
