@@ -1,4 +1,6 @@
 import express, { Request, Response } from 'express';
+import configureCors from './middleware/cors';
+import consfigureSecurityHeaders from './middleware/securityHeaders';
 import authenticationRouter from './route/authentication/router';
 import ordersRouter from './route/orders/router';
 import passwordsRouter from './route/passwords/router';
@@ -19,12 +21,6 @@ app.use((req: Request, res: Response, next: () => void) => {
   next();
 });
 
-// Middleware to handle errors
-app.use((err: Error, req: Request, res: Response, next: () => void) => {
-  console.error(err.stack);
-  res.status(500).json({ error: 'Internal Server Error' });
-});
-
 // Middleware to parse JSON bodies
 app.use(express.json());
 
@@ -32,34 +28,32 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Middleware to set security headers
-app.use((req: Request, res: Response, next: () => void) => {
-  res.setHeader('X-Content-Type-Options', 'nosniff');
-  res.setHeader('X-Frame-Options', 'DENY');
-  res.setHeader('X-XSS-Protection', '1; mode=block');
-  next();
-});
+app.use(consfigureSecurityHeaders);
 
 // Middleware to handle CORS
+app.use(configureCors);
+
+// Middleware to handle static files
+app.use(express.static('public'));
+// Middleware to handle gzip compression
 app.use((req: Request, res: Response, next: () => void) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept',
-  );
-  res.setHeader(
-    'Access-Control-Allow-Methods',
-    'GET, POST, PUT, DELETE, OPTIONS',
-  );
+  res.setHeader('Content-Encoding', 'gzip');
+  res.setHeader('Vary', 'Accept-Encoding');
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
   if (req.method === 'OPTIONS') {
     res.status(200);
   }
   next();
 });
-
+// Root endpoint to check if the API is online
 app.get('/', (req: Request, res: Response) => {
   res.send('API is online!');
 });
 
+// Import and use routers
 app.use('/authentication', authenticationRouter);
 app.use('/orders', ordersRouter);
 app.use('/passwords', passwordsRouter);
@@ -70,7 +64,68 @@ app.use('/users', usersRouter);
 app.use((req: Request, res: Response) => {
   res.status(404).json({ error: 'Not Found' });
 });
-
+// Middleware to handle 500 errors
+app.use((err: Error, req: Request, res: Response) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Internal Server Error' });
+});
+// Middleware to handle uncaught exceptions
+process.on('uncaughtException', (err: Error) => {
+  console.error('Uncaught Exception:', err);
+  // Handle the error (e.g., log it, send an alert, etc.)
+});
+// I found mentions that this might not be neded in express 5, but keeping it for safety
+// Might reemove it in the future if confirmed,
+// Middleware to handle unhandled promise rejections
+process.on('unhandledRejection', (reason: any, promise: Promise<any>) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  // Handle the error (e.g., log it, send an alert, etc.)
+});
+// Middleware to handle SIGINT (Ctrl+C)
+process.on('SIGINT', () => {
+  console.log('SIGINT received. Shutting down gracefully...');
+  // Perform any cleanup tasks here (e.g., close database connections)
+  process.exit(0);
+});
+// Middleware to handle SIGTERM (kill command)
+process.on('SIGTERM', () => {
+  console.log('SIGTERM received. Shutting down gracefully...');
+  // Perform any cleanup tasks here (e.g., close database connections)
+  process.exit(0);
+});
+// Middleware to handle SIGUSR2 (nodemon restart)
+process.on('SIGUSR2', () => {
+  console.log('SIGUSR2 received. Restarting gracefully...');
+  // Perform any cleanup tasks here (e.g., close database connections)
+  process.exit(0);
+});
+// Middleware to handle SIGHUP (terminal hangup)
+process.on('SIGHUP', () => {
+  console.log('SIGHUP received. Shutting down gracefully...');
+  // Perform any cleanup tasks here (e.g., close database connections)
+  process.exit(0);
+});
+// Middleware to handle SIGQUIT (Ctrl+\)
+process.on('SIGQUIT', () => {
+  console.log('SIGQUIT received. Shutting down gracefully...');
+  // Perform any cleanup tasks here (e.g., close database connections)
+  process.exit(0);
+});
+// Middleware to handle SIGBREAK (Windows Ctrl+Break)
+process.on('SIGBREAK', () => {
+  console.log('SIGBREAK received. Shutting down gracefully...');
+  // Perform any cleanup tasks here (e.g., close database connections)
+  process.exit(0);
+});
+// Middleware to handle SIGCONT (continue)
+process.on('SIGCONT', () => {
+  console.log('SIGCONT received. Continuing gracefully...');
+  // Perform any tasks here (e.g., resume operations)
+  // Note: This signal is not typically used in Node.js applications
+  // but can be handled if needed.
+  // process.exit(0);
+});
+// Start the server
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
 });

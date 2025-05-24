@@ -11,7 +11,7 @@
     "lint:fix": "eslint . --fix --ext .js,.jsx,.ts,.tsx",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "start": "node --env-file=.env dist/src/index.js",
+    "start": "node dist/src/index.js",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",

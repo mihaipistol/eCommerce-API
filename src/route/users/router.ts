@@ -5,11 +5,11 @@ import { usersTable } from '../../db/schema/users';
 import { PASSWORD_MIN_LENGTH } from '../../lib/constants';
 import { validateData } from '../../middleware/validation';
 import {
-  registerUser,
   deleteUser,
   getUserByEmail,
   getUserById,
   getUsers,
+  registerUser,
   updateUser,
 } from './controller';
 
