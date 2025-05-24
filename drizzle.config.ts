@@ -5,7 +5,7 @@ if (
   !process.env.DB_PORT ||
   !process.env.DB_USERNAME ||
   !process.env.DB_PASSWORD ||
-  !process.env.DB_DATABASE
+  !process.env.DB_NAME
 ) {
   throw new Error('DB Values must be set in the environment variables');
 }
@@ -26,7 +26,7 @@ export default defineConfig({
     port: parseInt(process.env.DB_PORT, 10),
     user: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
+    database: process.env.DB_NAME,
   },
   verbose: true,
   strict: true,

@@ -12,24 +12,44 @@ import { refreshTokensRelations } from './schema/refreshTokensRelations';
 import { usersTable } from './schema/users';
 import { usersRelations } from './schema/usersRelations';
 
-if (
-  !process.env.DB_HOST ||
-  !process.env.DB_PORT ||
-  !process.env.DB_USERNAME ||
-  !process.env.DB_PASSWORD ||
-  !process.env.DB_DATABASE
-) {
-  throw new Error('DB Values must be set in the environment variables');
+let connection = null;
+if (process.env.NODE_ENV === 'production') {
+  if (
+    !process.env.INSTANCE_UNIX_SOCKET ||
+    !process.env.DB_PORT ||
+    !process.env.DB_USERNAME ||
+    !process.env.DB_PASSWORD ||
+    !process.env.DB_NAME
+  ) {
+    throw new Error('DB Values must be set in the environment variables');
+  }
+  connection = mysql.createPool({
+    socketPath: process.env.INSTANCE_UNIX_SOCKET,
+    user: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    waitForConnections: true,
+  });
+} else {
+  console.log('Runinng in development mode');
+  if (
+    !process.env.DB_HOST ||
+    !process.env.DB_PORT ||
+    !process.env.DB_USERNAME ||
+    !process.env.DB_PASSWORD ||
+    !process.env.DB_NAME
+  ) {
+    throw new Error('DB Values must be set in the environment variables');
+  }
+  connection = mysql.createPool({
+    host: process.env.DB_HOST,
+    port: parseInt(process.env.DB_PORT, 10),
+    user: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    waitForConnections: true,
+  });
 }
-
-const connection = mysql.createPool({
-  host: process.env.DB_HOST,
-  port: parseInt(process.env.DB_PORT, 10),
-  user: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-  waitForConnections: true,
-});
 
 export const db = drizzle(connection, {
   schema: {

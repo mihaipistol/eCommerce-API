@@ -14,7 +14,6 @@
     "skipLibCheck": true, // Skip type checking of declaration files
     "strict": true, // Enable all strict type-checking options
     "strictNullChecks": true, // Enable strict null checks
-    "typeRoots": [ "./src/@types", "./node_modules/@types" ], // List of folders to include type definitions from
     "paths": {
       "*": [ "node_modules/*" ], // List of paths to be used for module resolution
     } // List of paths to be used for module resolution
