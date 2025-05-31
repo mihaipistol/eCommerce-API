@@ -24,8 +24,9 @@ export type EnvironmentProduction = EnvironmentType & {
   INSTANCE_UNIX_SOCKET: string;
 };
 
+const client = new SecretManagerServiceClient();
+
 async function loadSecret(secretIdentifier: string): Promise<string> {
-  const client = new SecretManagerServiceClient();
   const [version] = await client.accessSecretVersion({
     name: secretIdentifier,
   });
@@ -102,7 +103,7 @@ async function loadEnvironmentVariablesForProduction(): Promise<EnvironmentProdu
   const DB_PASSWORD = await loadSecret(process.env.DB_PASSWORD);
   const JWT_SECRET = await loadSecret(process.env.JWT_SECRET);
   const JWT_REFRESH_SECRET = await loadSecret(process.env.JWT_REFRESH_SECRET);
-  console.log(`Loaded secrets for production environment`);
+  console.log('Loaded secrets for production environment');
   return {
     ...env,
     DB_USERNAME,
@@ -113,13 +114,24 @@ async function loadEnvironmentVariablesForProduction(): Promise<EnvironmentProdu
   } as EnvironmentProduction;
 }
 
+let environment: EnvironmentDevelopment | EnvironmentProduction | null = null;
 export default async function getEnvironment(): Promise<
   EnvironmentDevelopment | EnvironmentProduction
 > {
-  const env = process.env.NODE_ENV || 'development';
-  if (env === 'production') {
-    return await loadEnvironmentVariablesForProduction();
-  } else {
-    return await loadEnvironmentVariablesForDevelopment();
+  if (environment) {
+    return environment;
   }
+  try {
+    // Determine the environment based on NODE_ENV
+    const env = process.env.NODE_ENV || 'development';
+    if (env === 'production') {
+      environment = await loadEnvironmentVariablesForProduction();
+    } else {
+      environment = await loadEnvironmentVariablesForDevelopment();
+    }
+  } catch (error) {
+    console.error('Error loading environment variables:', error);
+    throw error;
+  }
+  return environment;
 }

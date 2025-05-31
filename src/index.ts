@@ -4,7 +4,6 @@ import ordersRouter from './route/orders/router';
 import passwordsRouter from './route/passwords/router';
 import productsRouter from './route/products/router';
 import usersRouter from './route/users/router';
-import { SecretManagerServiceClient } from '@google-cloud/secret-manager';
 
 if (!process.env.EXPRESS_PORT) {
   console.error('PORT Value must be set in the environment variables');
@@ -62,13 +61,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.get('/health', async (req: Request, res: Response) => {
-  const client = new SecretManagerServiceClient();
-  const [version] = await client.accessSecretVersion({
-    name: 'projects/855777963467/secrets/api-db-username/versions/latest',
-  });
-  const payload = version?.payload?.data?.toString();
-  console.log(`Secret data: ${payload}`);
-  res.status(200).json({ status: 'OK', payload: payload || 'No payload' });
+  res.status(200).json({ status: 'OK' });
 });
 
 app.use('/authentication', authenticationRouter);

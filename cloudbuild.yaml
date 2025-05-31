@@ -1,0 +1,17 @@
+# This file contains the configuration for the Cloud Build service.
+steps:
+  - name: "gcr.io/cloud-builders/npm"
+    args: ["ci"]
+
+  - name: "gcr.io/cloud-builders/npm"
+    args: ["run", "build"]
+
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    entrypoint: "gcloud"
+    args:
+      ["app", "deploy", "app.yaml", "--project=ecommerce-v2-460809", "--quiet"]
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+  pool:
+    name: "projects/ecommerce-v2-460809/locations/europe-west3/workerPools/api-build-pool-ew3"
