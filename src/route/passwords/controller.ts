@@ -1,6 +1,6 @@
 import { count, desc, eq } from 'drizzle-orm';
 import { Request, Response } from 'express';
-import { db } from '../../db';
+import getDatabase from '../../db';
 import { passwordsTable } from '../../db/schema/passwords';
 import { PASSWORD_COUNT, SALT_LENGTH } from '../../lib/constants';
 import { makeHash, makeSalt } from '../../lib/crypto';
@@ -9,6 +9,7 @@ export async function getPasswordById(
   req: Request,
   res: Response,
 ): Promise<void> {
+  const db = await getDatabase();
   try {
     const passwordId = parseInt(req.params.id, 10);
     if (isNaN(passwordId)) {
@@ -35,6 +36,7 @@ export async function registerPassword(
   req: Request,
   res: Response,
 ): Promise<void> {
+  const db = await getDatabase();
   try {
     const password = {
       userId: req.body.userId,
@@ -58,6 +60,7 @@ export async function deletePassword(
   req: Request,
   res: Response,
 ): Promise<void> {
+  const db = await getDatabase();
   try {
     const id = parseInt(req.params.id, 10);
     if (isNaN(id)) {

@@ -81,6 +81,7 @@ This architecture ensures a secure, scalable, and efficient connection between A
 	env: standard
 	service: api
 	instance_class: F1
+  env_variables:
 	  NODE_ENV: "production"
 	  EXPRESS_PORT: "8080"
 	  INSTANCE_UNIX_SOCKET: /cloudsql/project_id:region:instance
@@ -88,10 +89,10 @@ This architecture ensures a secure, scalable, and efficient connection between A
 	  DB_NAME: "Database"
 	  DB_USERNAME: "User"
 	  DB_PASSWORD: "Password"
-	  JWT_SECRET='A string at least 256 bits long ...'
-	  JWT_REFRESH_SECRET='A string at least 256 bits long ...'
-	  JWT_EXPIRATION='3600000' # 1 hour in milliseconds
-	  JWT_REFRESH_EXPIRATION='2592000000' # 30 days in milliseconds
+	  JWT_SECRET: 'A string at least 256 bits long ...'
+	  JWT_REFRESH_SECRET: 'A string at least 256 bits long ...'
+	  JWT_EXPIRATION: '3600000' # 1 hour in milliseconds
+	  JWT_REFRESH_EXPIRATION: '2592000000' # 30 days in milliseconds
 
 ## References
 [Connect from App Engine standard environment | Cloud SQL for MySQL | Google Cloud](https://cloud.google.com/sql/docs/mysql/connect-app-engine-standard)

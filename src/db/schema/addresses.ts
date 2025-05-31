@@ -1,14 +1,11 @@
 import {
   bigint,
-  int,
   mysqlTable,
   serial,
   timestamp,
   varchar,
 } from 'drizzle-orm/mysql-core';
 import { usersTable } from './users';
-import { relations, eq } from 'drizzle-orm';
-import { db } from '..';
 
 export const addressesTable = mysqlTable('addresses', {
   id: serial().primaryKey(),

@@ -1,10 +1,11 @@
 import { eq } from 'drizzle-orm';
 import { Request, Response } from 'express';
-import { db } from '../../db';
+import getDatabase from '../../db';
 import { ordersProductsTable, ordersTable } from '../../db/schema/orders';
 import { productsTable } from '../../db/schema/products';
 
 export async function getOrders(req: Request, res: Response): Promise<void> {
+  const db = await getDatabase();
   try {
     if (req.user?.id === undefined) {
       res.status(400).json({ message: 'User ID is required' });
@@ -32,6 +33,7 @@ export async function getOrdersByUserId(
   req: Request,
   res: Response,
 ): Promise<void> {
+  const db = await getDatabase();
   try {
     if (req.user?.id === undefined) {
       res.status(400).json({ message: 'User ID is required' });
@@ -57,6 +59,7 @@ export async function getOrdersByUserId(
 }
 
 export async function getOrderById(req: Request, res: Response): Promise<void> {
+  const db = await getDatabase();
   try {
     const id = parseInt(req.params.id, 10);
     if (isNaN(id)) {
@@ -86,6 +89,7 @@ export async function registerOrder(
   req: Request,
   res: Response,
 ): Promise<void> {
+  const db = await getDatabase();
   try {
     const [order] = await db
       .insert(ordersTable)
@@ -130,6 +134,7 @@ export async function registerOrder(
 }
 
 export async function deleteOrder(req: Request, res: Response): Promise<void> {
+  const db = await getDatabase();
   try {
     const id = parseInt(req.params.id, 10);
     if (isNaN(id)) {

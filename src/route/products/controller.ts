@@ -1,12 +1,13 @@
 import { eq } from 'drizzle-orm';
 import { Request, Response } from 'express';
-import { db } from '../../db';
+import getDatabase from '../../db';
 import { productsTable } from '../../db/schema/products';
 
 export async function selectProducts(
   req: Request,
   res: Response,
 ): Promise<void> {
+  const db = await getDatabase();
   try {
     const result = await db.select().from(productsTable);
     res.status(200).json(result);
@@ -20,6 +21,7 @@ export async function selectProductById(
   req: Request,
   res: Response,
 ): Promise<void> {
+  const db = await getDatabase();
   try {
     const id = parseInt(req.params.id, 10);
     if (isNaN(id)) {
@@ -45,6 +47,7 @@ export async function registerProduct(
   req: Request,
   res: Response,
 ): Promise<void> {
+  const db = await getDatabase();
   try {
     const [result] = await db
       .insert(productsTable)
@@ -64,6 +67,7 @@ export async function updateProduct(
   req: Request,
   res: Response,
 ): Promise<void> {
+  const db = await getDatabase();
   try {
     const id = parseInt(req.params.id, 10);
     if (isNaN(id)) {
@@ -91,6 +95,7 @@ export async function deleteProduct(
   req: Request,
   res: Response,
 ): Promise<void> {
+  const db = await getDatabase();
   try {
     const id = parseInt(req.params.id, 10);
     if (isNaN(id)) {

@@ -1,17 +1,13 @@
 import { desc, eq } from 'drizzle-orm';
-import { Request, Response } from 'express';
-import { db } from '../../db';
+import { CookieOptions, Request, Response } from 'express';
+import getDatabase from '../../db';
 import { passwordsTable } from '../../db/schema/passwords';
 import { refreshTokensTable } from '../../db/schema/refreshTokens';
 import { usersTable } from '../../db/schema/users';
 import { makeHash } from '../../lib/crypto';
-import {
-  createToken,
-  JWT_COOKIE_OPTIONS,
-  JWT_REFRESH_EXPIRATION,
-  verifyToken,
-} from '../../lib/jwt';
+import { createToken, verifyToken } from '../../lib/jwt';
 import { JwtSub, JwtUser } from '../../types';
+import getEnvironment from '../../lib/environment';
 
 type UserWithPasswords = typeof usersTable.$inferSelect & {
   passwords: (typeof passwordsTable.$inferSelect)[];
@@ -22,7 +18,9 @@ type UserWithRefreshTokens = typeof usersTable.$inferSelect & {
 };
 
 async function registerRefreshToken(userId: number, token: string) {
-  const payload = await verifyToken(token);
+  const db = await getDatabase();
+  // This might be tiped better but any will do for now
+  const payload = (await verifyToken(token)) as any;
   const expiresAt = new Date(payload.exp * 1000);
   return await db
     .insert(refreshTokensTable)
@@ -32,6 +30,7 @@ async function registerRefreshToken(userId: number, token: string) {
 async function selectUsersWithPasswords(
   req: Request,
 ): Promise<UserWithPasswords | null> {
+  const db = await getDatabase();
   const result = await db.query.users.findFirst({
     with: {
       passwords: true,
@@ -43,6 +42,7 @@ async function selectUsersWithPasswords(
 }
 
 async function deleteUserRefreshTokens(id: number) {
+  const db = await getDatabase();
   return await db
     .delete(refreshTokensTable)
     .where(eq(refreshTokensTable.userId, id));
@@ -51,6 +51,7 @@ async function deleteUserRefreshTokens(id: number) {
 async function selectUsersWithRefreshTokens(
   userId: number,
 ): Promise<UserWithRefreshTokens | null> {
+  const db = await getDatabase();
   const result = await db.query.users.findFirst({
     with: {
       refreshTokens: true,
@@ -61,6 +62,7 @@ async function selectUsersWithRefreshTokens(
 }
 
 export async function login(req: Request, res: Response): Promise<void> {
+  const { NODE_ENV, JWT_COOKIE_EXPIRATION } = await getEnvironment();
   try {
     const user = await selectUsersWithPasswords(req);
     if (!user) {
@@ -76,7 +78,7 @@ export async function login(req: Request, res: Response): Promise<void> {
       res.status(401).json({ message: 'Authentication failed' });
       return;
     }
-    const accessToken = createToken(
+    const accessToken = await createToken(
       {
         id: user.id,
         email: user.email,
@@ -84,8 +86,14 @@ export async function login(req: Request, res: Response): Promise<void> {
       } as JwtUser,
       JwtSub.API,
     );
-    const refreshToken = createToken({ id: user.id }, JwtSub.REFRESH);
+    const refreshToken = await createToken({ id: user.id }, JwtSub.REFRESH);
     await registerRefreshToken(user.id, refreshToken);
+    const JWT_COOKIE_OPTIONS = {
+      httpOnly: true,
+      secure: NODE_ENV === 'production',
+      maxAge: JWT_COOKIE_EXPIRATION,
+      sameSite: 'strict',
+    } as CookieOptions;
     res.cookie('jwt', accessToken, JWT_COOKIE_OPTIONS);
     res.status(200).json({
       accessToken: accessToken,

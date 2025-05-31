@@ -80,7 +80,7 @@ export async function validateRefreshToken(
       res.status(401).json({ message: 'No token provided' });
       return;
     }
-    const { id } = await verifyToken(token);
+    const { id } = (await verifyToken(token)) as { id: number };
     if (!id) {
       res.status(401).json({ message: 'Invalid token' });
       return;

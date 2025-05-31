@@ -20,6 +20,7 @@
   "author": "Mihai Pistol",
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/secret-manager": "^6.0.1",
     "drizzle-orm": "^0.43.1",
     "drizzle-zod": "^0.7.1",
     "express": "^5.1.0",
