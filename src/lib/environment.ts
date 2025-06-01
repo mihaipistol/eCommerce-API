@@ -90,15 +90,16 @@ async function loadEnvironmentVariablesForProduction(): Promise<EnvironmentProdu
   if (
     !process.env.INSTANCE_UNIX_SOCKET ||
     !process.env.DB_PORT ||
+    !process.env.DB_NAME ||
     !process.env.DB_USERNAME ||
     !process.env.DB_PASSWORD ||
-    !process.env.DB_NAME ||
     // Check if JWT secrets are set to avoid typing
     !process.env.JWT_SECRET ||
     !process.env.JWT_REFRESH_SECRET
   ) {
     throw new Error('Missing environment variables');
   }
+  const DB_NAME = await loadSecret(process.env.DB_NAME);
   const DB_USERNAME = await loadSecret(process.env.DB_USERNAME);
   const DB_PASSWORD = await loadSecret(process.env.DB_PASSWORD);
   const JWT_SECRET = await loadSecret(process.env.JWT_SECRET);
@@ -106,6 +107,7 @@ async function loadEnvironmentVariablesForProduction(): Promise<EnvironmentProdu
   console.log('Loaded secrets for production environment');
   return {
     ...env,
+    DB_NAME,
     DB_USERNAME,
     DB_PASSWORD,
     JWT_SECRET,

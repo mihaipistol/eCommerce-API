@@ -3,15 +3,15 @@ env: standard
 service: api
 instance_class: F1
 env_variables:
-  NODE_ENV: "production"
-  EXPRESS_PORT: "8080"
-  INSTANCE_UNIX_SOCKET: "/cloudsql/ecommerce-v2-460809:europe-west3:ecommerce-v2"
-  DB_PORT: "3306"
-  DB_NAME: "eCommerve-v2"
-  DB_USERNAME: "projects/855777963467/secrets/api-db-username/versions/2"
-  DB_PASSWORD: "projects/855777963467/secrets/api-db-password/versions/2"
-  JWT_SECRET: "projects/855777963467/secrets/api-jwt-secret/versions/2"
-  JWT_REFRESH_SECRET: "projects/855777963467/secrets/api-jwt-refresh-secret/versions/2"
-  JWT_EXPIRATION: "3600000" # 1 hour in milliseconds
-  JWT_REFRESH_EXPIRATION: "2592000000" # 30 days in milliseconds
-  JWT_COOKIE_EXPIRATION: "2592000000" # 30 days in milliseconds
+  NODE_ENV: production
+  EXPRESS_PORT: 8080
+  INSTANCE_UNIX_SOCKET: /cloudsql/ecommerce-v3-461617:europe-west3:ecommerce-v3
+  DB_PORT: 3306
+  DB_NAME: projects/453209436197/secrets/api-db-name/versions/latest
+  DB_USERNAME: projects/453209436197/secrets/api-db-username/versions/latest
+  DB_PASSWORD: projects/453209436197/secrets/api-db-password/versions/latest
+  JWT_SECRET: projects/453209436197/secrets/api-jwt-secret/versions/latest
+  JWT_REFRESH_SECRET: projects/453209436197/secrets/api-jwt-refresh-secret/versions/latest
+  JWT_EXPIRATION: 3600000 # 1 hour in milliseconds
+  JWT_REFRESH_EXPIRATION: 2592000000 # 30 days in milliseconds
+  JWT_COOKIE_EXPIRATION: 2592000000 # 30 days in milliseconds

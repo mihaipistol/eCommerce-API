@@ -9,9 +9,9 @@ steps:
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: "gcloud"
     args:
-      ["app", "deploy", "app.yaml", "--project=ecommerce-v2-460809", "--quiet"]
+      ["app", "deploy", "app.yaml", "--project=ecommerce-v3-461617", "--quiet"]
 
 options:
   logging: CLOUD_LOGGING_ONLY
   pool:
-    name: "projects/ecommerce-v2-460809/locations/europe-west3/workerPools/api-build-pool-ew3"
+    name: "projects/ecommerce-v3-461617/locations/europe-west3/workerPools/api-build-pool-ew3"
