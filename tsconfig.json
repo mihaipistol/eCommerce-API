@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "module": "commonjs", // Specify module code generation
-    "target": "es6", // Specify ECMAScript target version
+    "target": "es2022", // Specify ECMAScript target version
     "baseUrl": ".", // Base directory to resolve non-relative module names
     "outDir": "./dist", // Redirect output structure to the directory
     "allowSyntheticDefaultImports": true, // Allows default imports from modules with no default export
@@ -9,6 +9,9 @@
     "forceConsistentCasingInFileNames": true, // Disallow inconsistently-cased references to the same file
     "isolatedModules": true, // Ensure that each file can be safely transpiled independently
     "noEmit": false, // Do not emit output
+    "types": [ "node", "jest" ], // List of type definitions to be included in the compilation
+    "removeComments": true, // Remove comments from output
+    "sourceMap": true, // Generates corresponding '.map' file"
     "noImplicitAny": true, // Raise error on expressions and declarations with an implied 'any' type
     "resolveJsonModule": true, // Include modules imported with .json extension
     "skipLibCheck": true, // Skip type checking of declaration files
@@ -17,5 +20,7 @@
     "paths": {
       "*": [ "node_modules/*" ], // List of paths to be used for module resolution
     } // List of paths to be used for module resolution
-  }
+  },
+  "include": [ "." ],
+  "exclude": [ "./dist" ]
 }
