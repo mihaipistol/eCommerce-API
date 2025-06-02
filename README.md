@@ -29,6 +29,12 @@
 
 Cloud SQL Admin API
 
+### Arhitecture
+
+**eCommerce API Pipline Diagram**
+
+![eCommerce API Pipline Diagram drawio](https://github.com/user-attachments/assets/f254a045-9ae9-4f15-8c7b-b126c262aef0)
+
 ### Steps to implement
 
 #### Step 0: CCP CLI
