@@ -1,4 +1,3 @@
-import { CookieOptions } from 'express';
 import jwt from 'jsonwebtoken';
 import { JwtSub } from '../types';
 import getEnvironment from './environment';

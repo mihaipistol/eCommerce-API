@@ -16,6 +16,14 @@ const config: Config.InitialOptions = {
       statements: 80,
     },
   },
+  collectCoverageFrom: [
+    'src/**/*.{js,jsx,ts,tsx}',
+    '!src/**/*.d.ts',
+    '!src/**/*.{spec,test}.{js,jsx,ts,tsx}',
+    '!**/node_modules/**',
+    '!**/dist/**',
+    '!**/coverage/**',
+  ],
   coveragePathIgnorePatterns: [
     '/node_modules/',
     '/dist/',
