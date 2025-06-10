@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import { z, ZodArray, ZodObject } from 'zod';
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
+import { z, ZodObject } from 'zod';
 import { validateData } from './validation';
 
 // Mock Express objects
@@ -10,12 +11,12 @@ const mockRequest = (body: any) =>
 
 const mockResponse = () => {
   const res: Partial<Response> = {};
-  res.status = jest.fn().mockReturnValue(res);
-  res.json = jest.fn().mockReturnValue(res);
+  res.status = vitest.fn().mockReturnValue(res);
+  res.json = vitest.fn().mockReturnValue(res);
   return res as Response;
 };
 
-const mockNext = () => jest.fn() as NextFunction;
+const mockNext = () => vitest.fn() as NextFunction;
 
 describe('validateData Middleware', () => {
   let req: Request;
@@ -130,7 +131,7 @@ describe('validateData Middleware', () => {
 
     // Force schema.parse to throw a non-ZodError
     const mockSchema = {
-      parse: jest.fn().mockImplementation(() => {
+      parse: vitest.fn().mockImplementation(() => {
         throw new Error('Unexpected error');
       }),
     } as unknown as ZodObject<any, any>;

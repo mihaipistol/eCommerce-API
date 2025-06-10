@@ -1,11 +1,12 @@
 // filepath: d:\Banc\eCommerce\API\src\middleware\authorization.test.ts
-import { Request, Response, NextFunction } from 'express';
-import { validateToken, validateRefreshToken } from './authorization';
-import { UserRole, JwtUser } from '../types';
+import { NextFunction, Request, Response } from 'express';
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
+import { JwtUser, UserRole } from '../types';
+import { validateToken } from './authorization';
 
 // Mocking ../lib/jwt
-const mockVerifyToken = jest.fn();
-jest.mock('../lib/jwt', () => ({
+const mockVerifyToken = vitest.fn();
+vitest.mock('../lib/jwt', () => ({
   __esModule: true, // This is important for ES modules
   verifyToken: (...args: any[]) => mockVerifyToken(...args),
 }));
@@ -14,7 +15,7 @@ jest.mock('../lib/jwt', () => ({
 const mockRequest = (customProps: Partial<Request> = {}): Request => {
   const req = {
     cookies: {},
-    header: jest.fn(), // Will be configured per test or with a default implementation if needed
+    header: vitest.fn(), // Will be configured per test or with a default implementation if needed
     body: {},
     user: undefined,
     refresh: undefined,
@@ -23,7 +24,7 @@ const mockRequest = (customProps: Partial<Request> = {}): Request => {
   } as unknown;
   // If customProps.headers is provided, make req.header reflect it simply
   if (customProps.headers) {
-    (req as Request).header = jest.fn((name: string): string | undefined => {
+    (req as Request).header = vitest.fn((name: string): string | undefined => {
       const lname = name.toLowerCase();
       // Express headers are case-insensitive
       for (const key in customProps.headers) {
@@ -40,18 +41,18 @@ const mockRequest = (customProps: Partial<Request> = {}): Request => {
 // Helper to create a mock Response object
 const mockResponse = (): Response => {
   const res = {} as Response;
-  res.status = jest.fn().mockReturnValue(res);
-  res.json = jest.fn().mockReturnValue(res);
-  res.send = jest.fn().mockReturnValue(res);
+  res.status = vitest.fn().mockReturnValue(res);
+  res.json = vitest.fn().mockReturnValue(res);
+  res.send = vitest.fn().mockReturnValue(res);
   return res;
 };
 
 // Helper for a mock NextFunction
-const mockNext: NextFunction = jest.fn();
+const mockNext: NextFunction = vitest.fn();
 
 describe('Authorization Middleware', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vitest.clearAllMocks();
   });
 
   // verifyRole is not exported, its logic is tested via validateToken

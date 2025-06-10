@@ -1,9 +1,10 @@
+import { describe, expect, it, vitest } from 'vitest';
 import { JwtSub } from '../types';
 import { createToken, verifyToken } from './jwt';
 
-jest.mock('./environment', () => ({
+vitest.mock('./environment', () => ({
   __esModule: true,
-  default: jest.fn(() =>
+  default: vitest.fn(() =>
     Promise.resolve({
       JWT_SECRET: 'testsecret',
       JWT_REFRESH_SECRET: 'testrefreshsecret',
