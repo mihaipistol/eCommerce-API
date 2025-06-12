@@ -13,9 +13,12 @@ import { productsTagsTable } from './productsTags';
 export const productsTable = mysqlTable('products', {
   id: serial().primaryKey(),
   name: varchar({ length: 255 }).notNull(),
+  brand: varchar({ length: 255 }).notNull(),
+  category: varchar({ length: 255 }).notNull(),
   description: text(),
-  image: varchar({ length: 255 }),
   price: double().notNull(),
+  rating: double(),
+  image: varchar({ length: 255 }),
   createdAt: timestamp().notNull().defaultNow(),
   updatedAt: timestamp().notNull().defaultNow(),
 });

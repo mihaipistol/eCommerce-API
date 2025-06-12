@@ -4,7 +4,7 @@ import { productsTagsTable } from './productsTags';
 
 export const tagsTable = mysqlTable('tags', {
   id: serial().primaryKey(),
-  name: varchar({ length: 256 }).unique().notNull(),
+  tag: varchar({ length: 256 }).unique().notNull(),
   createdAt: timestamp().notNull().defaultNow(),
   updatedAt: timestamp().notNull().defaultNow(),
 });

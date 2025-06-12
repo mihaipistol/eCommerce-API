@@ -4,7 +4,7 @@ import {
   mysqlTable,
   serial,
   timestamp,
-  varchar
+  varchar,
 } from 'drizzle-orm/mysql-core';
 import { OrderStatus } from '../../types';
 import { ordersProductsTable } from './ordersProducts';

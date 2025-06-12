@@ -14,6 +14,11 @@ import {
   ordersProductsRelations,
   ordersProductsTable,
 } from './schema/ordersProducts';
+import {
+  productsTagsRelations,
+  productsTagsTable,
+} from './schema/productsTags';
+import { tagsRelations, tagsTable } from './schema/tags';
 
 export default async function getDatabase() {
   const env = await getEnvironment();
@@ -52,6 +57,10 @@ export default async function getDatabase() {
       productsRelations,
       refreshToken: refreshTokensTable,
       refreshTokensRelations,
+      productsTags: productsTagsTable,
+      productsTagsRelations,
+      tags: tagsTable,
+      tagsRelations,
       users: usersTable,
       usersRelations,
     },

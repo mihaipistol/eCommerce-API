@@ -13,12 +13,13 @@ if (
 export default defineConfig({
   out: './drizzle',
   schema: [
-    './src/db/schema/adresses.ts',
+    './src/db/schema/addresses.ts',
     './src/db/schema/orders.ts',
     './src/db/schema/ordersProducts.ts',
     './src/db/schema/passwords.ts',
     './src/db/schema/products.ts',
     './src/db/schema/refreshTokens.ts',
+    './src/db/schema/productsTags.ts',
     './src/db/schema/tags.ts',
     './src/db/schema/users.ts',
   ],

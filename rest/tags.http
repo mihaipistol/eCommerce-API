@@ -1,3 +1,6 @@
+
+### List all tags
+
 GET http://localhost:3000/tags HTTP/1.1
 content-type: application/json
 
@@ -7,5 +10,5 @@ POST http://localhost:3000/tags HTTP/1.1
 content-type: application/json
 
 {
-    "name": "electronics"
+    "tag": "earbuds"
 }
