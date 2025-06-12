@@ -1,3 +1,4 @@
+import { relations } from 'drizzle-orm';
 import {
   double,
   mysqlTable,
@@ -6,6 +7,8 @@ import {
   timestamp,
   varchar,
 } from 'drizzle-orm/mysql-core';
+import { ordersProductsTable } from './ordersProducts';
+import { productsTagsTable } from './productsTags';
 
 export const productsTable = mysqlTable('products', {
   id: serial().primaryKey(),
@@ -16,3 +19,8 @@ export const productsTable = mysqlTable('products', {
   createdAt: timestamp().notNull().defaultNow(),
   updatedAt: timestamp().notNull().defaultNow(),
 });
+
+export const productsRelations = relations(productsTable, ({ many }) => ({
+  orders: many(ordersProductsTable),
+  tags: many(productsTagsTable),
+}));

@@ -6,6 +6,7 @@ import {
   varchar,
 } from 'drizzle-orm/mysql-core';
 import { usersTable } from './users';
+import { relations } from 'drizzle-orm';
 
 export const passwordsTable = mysqlTable('passwords', {
   id: serial().primaryKey(),
@@ -16,3 +17,10 @@ export const passwordsTable = mysqlTable('passwords', {
   salt: varchar({ length: 16 }).notNull(),
   createdAt: timestamp().notNull().defaultNow(),
 });
+
+export const passwordsRelations = relations(passwordsTable, ({ one }) => ({
+  password: one(usersTable, {
+    fields: [passwordsTable.userId],
+    references: [usersTable.id],
+  }),
+}));

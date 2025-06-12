@@ -2,6 +2,7 @@ import {
   bigint,
   mysqlTable,
   serial,
+  text,
   timestamp,
   varchar,
 } from 'drizzle-orm/mysql-core';
@@ -13,7 +14,7 @@ export const addressesTable = mysqlTable('addresses', {
     .notNull()
     .references(() => usersTable.id),
   phone: varchar({ length: 255 }),
-  address: varchar({ length: 255 }),
+  address: text(),
   city: varchar({ length: 255 }),
   state: varchar({ length: 255 }),
   country: varchar({ length: 255 }),
@@ -22,7 +23,7 @@ export const addressesTable = mysqlTable('addresses', {
   updatedAt: timestamp().notNull().defaultNow(),
 });
 
-// Define a oen to one relation between users and addresses
+// Define a one to one relation between users and addresses
 // export const addressesRelation = relations(usersTable, ({ one }) => ({
 //   address: one(addressesTable, {
 //     fields: [usersTable.id],

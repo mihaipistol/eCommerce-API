@@ -6,7 +6,7 @@ import { validateData } from '../../middleware/validation';
 import {
   registerPassword as registerPassword,
   deletePassword,
-  getPasswordById,
+  selectPasswordById,
 } from './controller';
 
 export const registerSchema = createInsertSchema(passwordsTable)
@@ -21,7 +21,7 @@ export const registerSchema = createInsertSchema(passwordsTable)
 
 const router = Router();
 
-router.get('/:id', getPasswordById);
+router.get('/:id', selectPasswordById);
 router.post('/', validateData(registerSchema), registerPassword);
 router.delete('/:id', deletePassword);
 

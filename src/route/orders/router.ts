@@ -1,14 +1,15 @@
 import { createInsertSchema } from 'drizzle-zod';
 import { Router } from 'express';
-import { ordersProductsTable, ordersTable } from '../../db/schema/orders';
-import { validateData } from '../../middleware/validation';
-import {
-  getOrderById as getOrdersById,
-  getOrders,
-  registerOrder as registerOrder,
-} from './controller';
-import { UserRole } from '../../types';
+import { ordersTable } from '../../db/schema/orders';
+import { ordersProductsTable } from '../../db/schema/ordersProducts';
 import { validateToken } from '../../middleware/authorization';
+import { validateData } from '../../middleware/validation';
+import { UserRole } from '../../types';
+import {
+  selectOrders,
+  selectOrderById as getOrdersById,
+  registerOrder,
+} from './controller';
 
 export const registerSchema = createInsertSchema(ordersTable)
   .extend({
@@ -29,7 +30,7 @@ export const registerSchema = createInsertSchema(ordersTable)
 
 const router = Router();
 
-router.get('/', validateToken(UserRole.USER), getOrders);
+router.get('/', validateToken(UserRole.USER), selectOrders);
 router.get('/:id', validateToken(UserRole.USER), getOrdersById);
 router.post(
   '/',

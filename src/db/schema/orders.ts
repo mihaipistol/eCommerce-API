@@ -1,15 +1,13 @@
+import { relations } from 'drizzle-orm';
 import {
   bigint,
-  double,
-  int,
   mysqlTable,
-  primaryKey,
   serial,
   timestamp,
-  varchar,
+  varchar
 } from 'drizzle-orm/mysql-core';
 import { OrderStatus } from '../../types';
-import { productsTable } from './products';
+import { ordersProductsTable } from './ordersProducts';
 import { usersTable } from './users';
 
 export const ordersTable = mysqlTable('orders', {
@@ -22,17 +20,6 @@ export const ordersTable = mysqlTable('orders', {
   updatedAt: timestamp(),
 });
 
-export const ordersProductsTable = mysqlTable(
-  'orders_products',
-  {
-    orderId: bigint({ mode: 'number', unsigned: true })
-      .notNull()
-      .references(() => ordersTable.id),
-    productId: bigint({ mode: 'number', unsigned: true })
-      .notNull()
-      .references(() => productsTable.id),
-    price: double().notNull(),
-    quantity: int().notNull(),
-  },
-  (t) => [primaryKey({ columns: [t.orderId, t.productId] })],
-);
+export const ordersRelations = relations(ordersTable, ({ many }) => ({
+  products: many(ordersProductsTable),
+}));

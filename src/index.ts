@@ -3,6 +3,7 @@ import authenticationRouter from './route/authentication/router';
 import ordersRouter from './route/orders/router';
 import passwordsRouter from './route/passwords/router';
 import productsRouter from './route/products/router';
+import tagsRouter from './route/tags/router';
 import usersRouter from './route/users/router';
 import getEnvironment from './lib/environment';
 
@@ -64,6 +65,7 @@ getEnvironment().then((env) => {
   app.use('/orders', ordersRouter);
   app.use('/passwords', passwordsRouter);
   app.use('/products', productsRouter);
+  app.use('/tags', tagsRouter);
   app.use('/users', usersRouter);
 
   // Middleware to handle 404 errors

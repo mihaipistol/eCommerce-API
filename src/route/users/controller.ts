@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import getDatabase from '../../db';
 import { usersTable } from '../../db/schema/users';
 
-export async function getUsers(req: Request, res: Response): Promise<void> {
+export async function selectUsers(req: Request, res: Response): Promise<void> {
   const db = await getDatabase();
   try {
     const result = await db.select().from(usersTable);
@@ -14,7 +14,7 @@ export async function getUsers(req: Request, res: Response): Promise<void> {
   }
 }
 
-export async function getUserById(req: Request, res: Response): Promise<void> {
+export async function selectUserById(req: Request, res: Response): Promise<void> {
   const db = await getDatabase();
   try {
     const userId = parseInt(req.params.id, 10);
@@ -37,7 +37,7 @@ export async function getUserById(req: Request, res: Response): Promise<void> {
   }
 }
 
-export async function getUserByEmail(
+export async function selectUserByEmail(
   req: Request,
   res: Response,
 ): Promise<void> {

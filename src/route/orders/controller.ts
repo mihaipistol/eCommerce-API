@@ -1,10 +1,11 @@
 import { eq } from 'drizzle-orm';
 import { Request, Response } from 'express';
 import getDatabase from '../../db';
-import { ordersProductsTable, ordersTable } from '../../db/schema/orders';
+import { ordersTable } from '../../db/schema/orders';
+import { ordersProductsTable } from '../../db/schema/ordersProducts';
 import { productsTable } from '../../db/schema/products';
 
-export async function getOrders(req: Request, res: Response): Promise<void> {
+export async function selectOrders(req: Request, res: Response): Promise<void> {
   const db = await getDatabase();
   try {
     if (req.user?.id === undefined) {
@@ -29,7 +30,7 @@ export async function getOrders(req: Request, res: Response): Promise<void> {
     res.status(500).json({ error: 'Failed to fetch orders' });
   }
 }
-export async function getOrdersByUserId(
+export async function selectOrdersByUserId(
   req: Request,
   res: Response,
 ): Promise<void> {
@@ -58,7 +59,7 @@ export async function getOrdersByUserId(
   }
 }
 
-export async function getOrderById(req: Request, res: Response): Promise<void> {
+export async function selectOrderById(req: Request, res: Response): Promise<void> {
   const db = await getDatabase();
   try {
     const id = parseInt(req.params.id, 10);

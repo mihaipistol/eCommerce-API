@@ -1,11 +1,10 @@
 import { relations } from 'drizzle-orm';
 import {
   bigint,
-  int,
   mysqlTable,
   serial,
   timestamp,
-  varchar,
+  varchar
 } from 'drizzle-orm/mysql-core';
 import { usersTable } from './users';
 
@@ -18,3 +17,13 @@ export const refreshTokensTable = mysqlTable('refresh_tokens', {
   createdAt: timestamp().notNull().defaultNow(),
   expiresAt: timestamp().notNull(),
 });
+
+export const refreshTokensRelations = relations(
+  refreshTokensTable,
+  ({ one }) => ({
+    user: one(usersTable, {
+      fields: [refreshTokensTable.userId],
+      references: [usersTable.id],
+    }),
+  }),
+);

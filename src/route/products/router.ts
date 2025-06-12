@@ -11,12 +11,15 @@ import {
   selectProducts,
   updateProduct,
 } from './controller';
+import { string } from 'zod';
 
 const registerSchema = createInsertSchema(productsTable)
+  .extend({
+    tags: string().array(),
+  })
   .omit({
     id: true,
-  })
-  .array();
+  });
 
 const updateSchema = createUpdateSchema(productsTable);
 

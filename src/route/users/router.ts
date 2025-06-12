@@ -7,9 +7,9 @@ import { validateData } from '../../middleware/validation';
 import {
   registerUser,
   deleteUser,
-  getUserByEmail,
-  getUserById,
-  getUsers,
+  selectUserByEmail,
+  selectUserById,
+  selectUsers,
   updateUser,
 } from './controller';
 
@@ -30,9 +30,9 @@ const updateSchema = createUpdateSchema(usersTable);
 
 const router = Router();
 
-router.get('/', getUsers);
-router.get('/id/:id', getUserById);
-router.get('/email/:email', getUserByEmail);
+router.get('/', selectUsers);
+router.get('/id/:id', selectUserById);
+router.get('/email/:email', selectUserByEmail);
 router.post('/', validateData(registerSchema), registerUser);
 router.put('/:id', validateData(updateSchema), updateUser);
 router.delete('/:id', deleteUser);

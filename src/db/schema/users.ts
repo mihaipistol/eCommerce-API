@@ -1,5 +1,8 @@
 import { mysqlTable, serial, timestamp, varchar } from 'drizzle-orm/mysql-core';
 import { UserRole, UserStatus } from '../../types';
+import { relations } from 'drizzle-orm';
+import { passwordsTable } from './passwords';
+import { refreshTokensTable } from './refreshTokens';
 
 export const usersTable = mysqlTable('users', {
   id: serial().primaryKey(),
@@ -12,3 +15,8 @@ export const usersTable = mysqlTable('users', {
   createdAt: timestamp().notNull().defaultNow(),
   updatedAt: timestamp().notNull().defaultNow(),
 });
+
+export const usersRelations = relations(usersTable, ({ many }) => ({
+  passwords: many(passwordsTable),
+  refreshTokens: many(refreshTokensTable),
+}));

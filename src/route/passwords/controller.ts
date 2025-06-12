@@ -5,7 +5,7 @@ import { passwordsTable } from '../../db/schema/passwords';
 import { PASSWORD_COUNT, SALT_LENGTH } from '../../lib/constants';
 import { makeHash, makeSalt } from '../../lib/crypto';
 
-export async function getPasswordById(
+export async function selectPasswordById(
   req: Request,
   res: Response,
 ): Promise<void> {

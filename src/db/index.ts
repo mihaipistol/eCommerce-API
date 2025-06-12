@@ -2,16 +2,18 @@ import { drizzle } from 'drizzle-orm/mysql2';
 import mysql from 'mysql2/promise';
 import getEnvironment from './../lib/environment';
 import { addressesTable } from './schema/addresses';
-import { ordersTable } from './schema/orders';
-import { ordersRelations } from './schema/ordersRelations';
-import { passwordsTable } from './schema/passwords';
-import { passwordsRelations } from './schema/passwordsRelations';
-import { productsTable } from './schema/products';
-import { productsRelations } from './schema/productsRelations';
-import { refreshTokensTable } from './schema/refreshTokens';
-import { refreshTokensRelations } from './schema/refreshTokensRelations';
-import { usersTable } from './schema/users';
-import { usersRelations } from './schema/usersRelations';
+import { ordersRelations, ordersTable } from './schema/orders';
+import { passwordsRelations, passwordsTable } from './schema/passwords';
+import { productsRelations, productsTable } from './schema/products';
+import {
+  refreshTokensRelations,
+  refreshTokensTable,
+} from './schema/refreshTokens';
+import { usersRelations, usersTable } from './schema/users';
+import {
+  ordersProductsRelations,
+  ordersProductsTable,
+} from './schema/ordersProducts';
 
 export default async function getDatabase() {
   const env = await getEnvironment();
@@ -41,14 +43,16 @@ export default async function getDatabase() {
     schema: {
       addresses: addressesTable,
       orders: ordersTable,
-      passwords: passwordsTable,
-      products: productsTable,
-      refreshToken: refreshTokensTable,
-      users: usersTable,
       ordersRelations,
+      ordersProducts: ordersProductsTable,
+      ordersProductsRelations,
+      passwords: passwordsTable,
       passwordsRelations,
+      products: productsTable,
       productsRelations,
+      refreshToken: refreshTokensTable,
       refreshTokensRelations,
+      users: usersTable,
       usersRelations,
     },
     mode: 'default',
