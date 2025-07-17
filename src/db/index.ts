@@ -33,7 +33,6 @@ export default async function getDatabase() {
       waitForConnections: true,
     });
   } else {
-    console.log('Runinng in development mode');
     connection = mysql.createPool({
       host: env.DB_HOST,
       port: env.DB_PORT,
